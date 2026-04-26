@@ -13,6 +13,14 @@ int main()
 		"20x20 Grid Traversal" );
 
 	sf::RectangleShape cell( { cellSize, cellSize } );
+
+	auto image = sf::Image{};
+	if (!image.loadFromFile("resources/photo.jpg"))
+	{
+		// Error handling...
+	}
+	window.setIcon(image.getSize(), image.getPixelsPtr());
+
 	cell.setFillColor( sf::Color::Transparent );
 	cell.setOutlineColor( sf::Color( 70, 70, 70 ) );
 	cell.setOutlineThickness( 1.f );
