@@ -17,22 +17,24 @@
 
     bool Snake::move(Direction direction){
 
+        Position newPosition = this->head;
+
         switch (direction){
             case Direction::Up:
-                direction = Position{0, -1};
+                newPosition = Position(this->head.getX(), this->head.getY() + 1);
                 break;
             case Direction::Down:
-                direction = Position{0, 1};
+                newPosition = Position(this->head.getX(), this->head.getY() - 1);
                 break;
             case Direction::Left:
-                direction = Position{-1, 0};
+                newPosition = Position(this->head.getX() - 1 , this->head.getY());
                 break;
             case Direction::Right:
-                direction = Position{1, 0};
+                newPosition = Position(this->head.getX() + 1, this->head.getY());
                 break;
         }
         
-        Position newPosition = this->head + direction;
+        
         if (isCollision(newPosition)){
             return false;
         }
