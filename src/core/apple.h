@@ -12,7 +12,6 @@ class Apple
 
     public:
         Apple(Position position);
-        ~Apple();
         Position getPosition();
 };
 
