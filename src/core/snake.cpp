@@ -9,23 +9,14 @@ Snake::~Snake(){
     this->body.clear();
 };
 
-Position Snake::getHead(){
-    return this->head;
-};
-Position Snake::getTail(){
-    return this->tail;
-};
-
-bool Snake::move(Direction direction){
-
+Position Snake::getNewPosition(Direction direction){
     Position newPosition = this->head;
-
     switch (direction){
         case Direction::Up:
-            newPosition = Position(this->head.getX(), this->head.getY() + 1);
+            newPosition = Position(this->head.getX(), this->head.getY() - 1);
             break;
         case Direction::Down:
-            newPosition = Position(this->head.getX(), this->head.getY() - 1);
+            newPosition = Position(this->head.getX(), this->head.getY() + 1);
             break;
         case Direction::Left:
             newPosition = Position(this->head.getX() - 1 , this->head.getY());
@@ -34,17 +25,28 @@ bool Snake::move(Direction direction){
             newPosition = Position(this->head.getX() + 1, this->head.getY());
             break;
     }
+    return newPosition;
+}
+
+Position Snake::getHead(){
+    return this->head;
+};
+Position Snake::getTail(){
+    return this->tail;
+};
+
+Position Snake::move(Direction direction, bool grow){
     
-    
-    if (isCollision(newPosition)){
-        return false;
-    }
+    Position newPosition = this->getNewPosition(direction);
     
     this->body.push_front(newPosition);
-    this->body.pop_back();
+
+    if (!grow){
+        this->body.pop_back();
+    }
 
     this->head = newPosition;
-    this->tail = this->body.front();
-    
-    return true;
+    this->tail = this->body.back();
+
+    return newPosition;
 };

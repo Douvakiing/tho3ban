@@ -14,9 +14,8 @@ class Snake
         Position head;
         Position tail;
 
-        bool isCollision(Position position){
-            return find(this->body.begin(), this->body.end(), position) != this->body.end();
-        };
+        Position getNewPosition(Direction direction);
+
     public:
         Snake(Position position);
         ~Snake();
@@ -24,7 +23,7 @@ class Snake
         Position getHead();
         Position getTail();
 
-        bool move(Direction direction);
+        Position move(Direction direction, bool grow = false);
 };
 
 #endif
