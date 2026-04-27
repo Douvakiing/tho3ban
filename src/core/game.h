@@ -10,6 +10,7 @@ using namespace std;
 class Game
 {
     private:
+        const int totalSize = 20;
         Snake snake;
         Apple apple;
         bool isGameOver;
