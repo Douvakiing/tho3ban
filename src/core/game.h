@@ -35,14 +35,14 @@ class Game
         }
 
         void start(){
-            snake = Snake(Position{0,0}, 3);
+            snake = Snake(Position{5,5}, 3);
             apple = Apple(Position{0,0});
             isGameOver = false;
             score = 0;
             speed = 1;
         };
 
-        void update(Direction input){};
+        void update(Direction input);
 
         void draw();
 
