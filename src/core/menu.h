@@ -22,7 +22,8 @@ public:
     
     // Handles key presses when on the menu screen
     void handleInput(sf::Keyboard::Scancode key, GameState& currentState);
-    
+    // Handles all events (keys, mouse movement, mouse clicks)
+    void handleEvent(const sf::Event& event, GameState& currentState);
     // Draws the menu shapes to the window
     void draw(sf::RenderWindow& window);
 };
