@@ -1,4 +1,8 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include "core/snake.h"
+
+using namespace std;
 
 int main()
 {
@@ -31,6 +35,8 @@ int main()
 	int currentIndex = 0;
 	sf::Clock tickClock;
 
+	Snake snake = Snake(Position{0,0});
+
 	while ( window.isOpen() )
 	{
 		while ( const std::optional event = window.pollEvent() )
@@ -43,6 +49,9 @@ int main()
 
 		while ( tickClock.getElapsedTime().asSeconds() >= tickSeconds )
 		{
+			snake.move(Right);
+			std::cout << snake.getHead().x << " " << snake.getHead().y << std::endl;
+
 			currentIndex = ( currentIndex + 1 ) % ( gridSize * gridSize );
 			tickClock.restart();
 		}
