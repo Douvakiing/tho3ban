@@ -11,6 +11,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 find_package(SFML 3 QUIET COMPONENTS Graphics Window System)
 if(NOT SFML_FOUND)
     include(FetchContent)
+    
+    set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build static libraries" FORCE) 
+    
     set(SFML_BUILD_AUDIO OFF CACHE BOOL "Disable SFML audio module" FORCE)
     set(SFML_BUILD_NETWORK OFF CACHE BOOL "Disable SFML network module" FORCE)
     FetchContent_Declare(SFML
@@ -26,5 +29,7 @@ add_executable(tho3ban src/main.cpp)
 target_compile_features(tho3ban PRIVATE cxx_std_17)
 target_link_libraries(tho3ban PRIVATE SFML::Graphics SFML::Window SFML::System)
 set_target_properties(tho3ban PROPERTIES OUTPUT_NAME "tho3ban++")
+
+target_link_options(tho3ban PRIVATE -static -static-libgcc -static-libstdc++)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT tho3ban)
