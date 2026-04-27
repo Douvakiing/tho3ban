@@ -18,9 +18,9 @@ void Game::draw() {}
 
 void Game::update(Direction input){
     if (!isOppositeDirection(input, inputCache)) inputCache = input;
+    updateOccupation();
     snake.move(inputCache);
 }
-
 void Game::updateOccupation(){
     if(!initialized){
         for(int i = 0; i < snake.getSize(); i++){
@@ -31,3 +31,4 @@ void Game::updateOccupation(){
         // TBD
     }
 }
+
