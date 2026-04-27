@@ -1,3 +1,8 @@
+#ifndef THO3BAN_SRC_CORE_TYPES_H
+#define THO3BAN_SRC_CORE_TYPES_H
+
+using namespace std;
+
 class Position
 {
     private:
@@ -29,3 +34,13 @@ enum class Direction
     Left,
     Right
 };
+
+inline bool isOppositeDirection(Direction a, Direction b)
+{
+    return (a == Direction::Up && b == Direction::Down) ||
+           (a == Direction::Down && b == Direction::Up) ||
+           (a == Direction::Left && b == Direction::Right) ||
+           (a == Direction::Right && b == Direction::Left);
+}
+
+#endif

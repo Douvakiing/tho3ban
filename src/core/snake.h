@@ -1,3 +1,6 @@
+#ifndef THO3BAN_SRC_CORE_SNAKE_H
+#define THO3BAN_SRC_CORE_SNAKE_H
+
 #include <deque>
 #include <algorithm>
 #include "types.h"
@@ -23,3 +26,5 @@ class Snake
 
         bool move(Direction direction);
 };
+
+#endif

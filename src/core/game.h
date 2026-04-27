@@ -1,7 +1,11 @@
+#ifndef THO3BAN_SRC_CORE_GAME_H
+#define THO3BAN_SRC_CORE_GAME_H
+
 using namespace std;
 
 #include "snake.h"
 #include "apple.h"
+#include "types.h"
 
 class Game
 {
@@ -13,20 +17,27 @@ class Game
         int score;
         int speed;
 
-        Position inputCache;
+        Direction inputCache;
 
     public:
         Game();
         ~Game();
-        void start();
-        void update(Position input){
-            if (input != Position{0,0}){
-                snake.move(input);
-                input = Position{0,0};
-            }
-            if ((input - inputCache) % 2 == 0){
-                snake.move(input);
-            }
+        Snake getSnake(){
+            return snake;
+        }
+        void start(){
+            snake = Snake(Position{0,0});
+            apple = Apple(Position{0,0});
+            isGameOver = false;
+            score = 0;
+            speed = 1;
+        };
+        void update(Direction input){
+            if (!isOppositeDirection(input, inputCache)) inputCache = input;
+
+            snake.move(inputCache);
         };
         void draw();
 };
+
+#endif

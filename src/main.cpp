@@ -1,41 +1,26 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "core/snake.h"
+#include "core/game.h"
+#include "core/types.h"
 
 using namespace std;
 
 int main()
 {
 	constexpr int gridSize = 20;
-	constexpr float cellSize = 32.f;
+	constexpr int cellSize = 32;
 	constexpr float tickSeconds = 0.5f;
-	constexpr float gridOffset = 20.f;
 
-	const float windowSize = gridOffset * 2.f + ( cellSize * gridSize );
 	sf::RenderWindow window(
-		sf::VideoMode( { static_cast<unsigned int>( windowSize ), static_cast<unsigned int>( windowSize ) } ),
-		"20x20 Grid Traversal" );
+		sf::VideoMode( { 800u, 600u } ),
+		"tho3ban" );
 
-	sf::RectangleShape cell( { cellSize, cellSize } );
-
-	auto image = sf::Image{};
-	if (!image.loadFromFile("resources/photo.jpg"))
-	{
-		// Error handling...
-	}
-	window.setIcon(image.getSize(), image.getPixelsPtr());
-
-	cell.setFillColor( sf::Color::Transparent );
-	cell.setOutlineColor( sf::Color( 70, 70, 70 ) );
-	cell.setOutlineThickness( 1.f );
-
-	sf::RectangleShape traveler( { cellSize - 4.f, cellSize - 4.f } );
-	traveler.setFillColor( sf::Color::Green );
-
-	int currentIndex = 0;
 	sf::Clock tickClock;
 
-	Snake snake = Snake(Position{0,0});
+	Game game = Game();
+	game.start();
+	Direction inputDirection = Direction::Right;
 
 	while ( window.isOpen() )
 	{
@@ -45,34 +30,38 @@ int main()
 			{
 				window.close();
 			}
+
+			if ( const auto* keyPressed = event->getIf<sf::Event::KeyPressed>() )
+			{
+				switch ( keyPressed->scancode )
+				{
+					case sf::Keyboard::Scancode::Up:
+						inputDirection = Direction::Up;
+						break;
+					case sf::Keyboard::Scancode::Left:
+						inputDirection = Direction::Left;
+						break;
+					case sf::Keyboard::Scancode::Down:
+						inputDirection = Direction::Down;
+						break;
+					case sf::Keyboard::Scancode::Right:
+						inputDirection = Direction::Right;
+						break;
+					default:
+						break;
+				}
+			}
 		}
 
 		while ( tickClock.getElapsedTime().asSeconds() >= tickSeconds )
 		{
-			snake.move(Right);
-			std::cout << snake.getHead().x << " " << snake.getHead().y << std::endl;
+			game.update(inputDirection);
 
-			currentIndex = ( currentIndex + 1 ) % ( gridSize * gridSize );
+			cout << game.getSnake().getHead().getX() << " " << game.getSnake().getHead().getY() << endl;
+
 			tickClock.restart();
 		}
 
-		const int row = currentIndex / gridSize;
-		const int col = currentIndex % gridSize;
-		traveler.setPosition(
-			{ gridOffset + ( col * cellSize ) + 2.f, gridOffset + ( row * cellSize ) + 2.f } );
-
-		window.clear( sf::Color::Black );
-
-		for ( int y = 0; y < gridSize; ++y )
-		{
-			for ( int x = 0; x < gridSize; ++x )
-			{
-				cell.setPosition( { gridOffset + ( x * cellSize ), gridOffset + ( y * cellSize ) } );
-				window.draw( cell );
-			}
-		}
-
-		window.draw( traveler );
 		window.display();
 	}
 }
