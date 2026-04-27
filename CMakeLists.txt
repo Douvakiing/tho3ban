@@ -25,7 +25,11 @@ if(NOT SFML_FOUND)
     FetchContent_MakeAvailable(SFML)
 endif()
 
-add_executable(tho3ban src/main.cpp)
+file(GLOB_RECURSE THO3BAN_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+)
+
+add_executable(tho3ban ${THO3BAN_SOURCES})
 target_compile_features(tho3ban PRIVATE cxx_std_17)
 target_link_libraries(tho3ban PRIVATE SFML::Graphics SFML::Window SFML::System)
 set_target_properties(tho3ban PROPERTIES OUTPUT_NAME "tho3ban++")
