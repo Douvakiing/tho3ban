@@ -1,8 +1,14 @@
 #include "snake.h"
 
-Snake::Snake(Position position){
+Snake::Snake(Position position, int snakeSize){
     this->body.push_front(position);
     this->head = position;
+    this->size = snakeSize;
+
+
+    for(int i = 1; i <= size-1; i++){
+        this->body.push_back(Position(position.getX() - i, position.getY()));
+    }
 }
 
 Snake::~Snake(){
@@ -34,6 +40,9 @@ Position Snake::getHead(){
 Position Snake::getTail(){
     return this->tail;
 };
+int Snake::getSize(){
+    return this->size;
+}
 
 Position Snake::move(Direction direction, bool grow){
     
@@ -43,6 +52,9 @@ Position Snake::move(Direction direction, bool grow){
 
     if (!grow){
         this->body.pop_back();
+    }
+    else{
+        size++;
     }
 
     this->head = newPosition;
