@@ -37,3 +37,10 @@ set_target_properties(tho3ban PROPERTIES OUTPUT_NAME "tho3ban++")
 target_link_options(tho3ban PRIVATE -static -static-libgcc -static-libstdc++)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT tho3ban)
+
+# Automatically copy the resources folder to the output directory after building
+add_custom_command(TARGET tho3ban POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_CURRENT_SOURCE_DIR}/resources
+    $<TARGET_FILE_DIR:tho3ban>/resources
+)
