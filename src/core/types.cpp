@@ -28,11 +28,6 @@ Position Position::operator+( const Position& rhs )
     return Position{ this->x + rhs.x, this->y + rhs.y };
 }
 
-Position Position::operator-( const Position& rhs )
-{
-    return Position{ this->x - rhs.x, this->y - rhs.y };
-}
-
 bool Position::operator==( const Position& rhs ) const
 {
     return this->x == rhs.x && this->y == rhs.y;
