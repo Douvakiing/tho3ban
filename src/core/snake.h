@@ -27,6 +27,7 @@ class Snake
         int getSize();
 
         Position move(Direction direction, bool grow = false);
+        deque<Position> getBody();
 };
 
 #endif

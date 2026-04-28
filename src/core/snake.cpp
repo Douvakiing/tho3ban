@@ -62,3 +62,6 @@ Position Snake::move(Direction direction, bool grow){
 
     return newPosition;
 };
+deque<Position> Snake::getBody() {
+    return this->body;
+}
