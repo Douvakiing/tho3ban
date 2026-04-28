@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int main_cli() {
+int main() {
     constexpr int gridSize = 10;
     
     Game game = Game();
