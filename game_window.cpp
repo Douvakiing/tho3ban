@@ -140,8 +140,24 @@ void game_window::drawSnake()
 void game_window::drawApple()
 {
     const Position apple = game.getApple().getPosition();
-    const QRectF rect(apple.getX(), apple.getY(), 1, 1);
-    scene->addRect(rect, QPen(Qt::NoPen), QBrush(appleColor));
+    // Extract exact X and Y coordinates
+    qreal x = apple.getX();
+    qreal y = apple.getY();
+
+    // 1. The Apple Body
+    // We start slightly offset (x + 0.1, y + 0.2) and make it slightly smaller
+    // than 1x1 (width 0.8, height 0.75) so it looks plump and doesn't touch the grid edges.
+    QRectF appleBody(x + 0.1, y + 0.2, 0.8, 0.75);
+
+    // Use a bright, piercing Neon Crimson for the apple body
+    scene->addEllipse(appleBody, QPen(Qt::NoPen), QBrush(QColor(0xFF0044)));
+
+    // 2. The Leaf
+    // We position a tiny green oval near the top right of the apple body
+    QRectF appleLeaf(x + 0.45, y + 0.05, 0.3, 0.25);
+
+    // Use a bright Matrix/Neon Green for the leaf
+    scene->addEllipse(appleLeaf, QPen(Qt::NoPen), QBrush(QColor(0x39FF14)));
 }
 
 void game_window::drawGrid(QColor lightColor, QColor darkColor)
