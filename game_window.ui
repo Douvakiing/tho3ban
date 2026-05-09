@@ -51,7 +51,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber">
+   <widget class="QLCDNumber" name="scorelcdNumber">
     <property name="geometry">
      <rect>
       <x>850</x>
@@ -66,8 +66,11 @@ border: 3px solid #333333; /* Dark gray frame */
 color: #39FF14;            /* Classic &quot;Matrix&quot; green digits */
 font: bold 22pt &quot;Courier New&quot;;</string>
     </property>
+    <property name="digitCount">
+     <number>7</number>
+    </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="gameOverabel">
     <property name="geometry">
      <rect>
       <x>440</x>
@@ -87,8 +90,11 @@ border-color: rgb(0, 0, 0);</string>
     <property name="text">
      <string>Game Over</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="scoreLabel">
     <property name="geometry">
      <rect>
       <x>850</x>
@@ -136,7 +142,7 @@ font: bold 22pt &quot;Courier New&quot;;</string>
      <string>&lt;Back</string>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber_2">
+   <widget class="QLCDNumber" name="timelcdNumber">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -151,8 +157,11 @@ border: 3px solid #333333; /* Dark gray frame */
 color: #39FF14;            /* Classic &quot;Matrix&quot; green digits */
 font: bold 22pt &quot;Courier New&quot;;</string>
     </property>
+    <property name="digitCount">
+     <number>7</number>
+    </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="timeLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -174,16 +183,99 @@ font: bold 22pt &quot;Courier New&quot;;</string>
      <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
-   <zorder>label</zorder>
+   <widget class="QLabel" name="countdownTimeLabel">
+    <property name="geometry">
+     <rect>
+      <x>465</x>
+      <y>270</y>
+      <width>150</width>
+      <height>170</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"> color: rgb(0, 255, 255);
+    font-family: &quot;Courier New&quot;;
+    font-size: 36px;
+    font-weight: bold;
+background-color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>3</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="highScorelcdNumber">
+    <property name="geometry">
+     <rect>
+      <x>850</x>
+      <y>160</y>
+      <width>209</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Courier New</family>
+      <pointsize>18</pointsize>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #1a1a1a; /* Pitch black */
+border: 3px solid #333333; /* Dark gray frame */
+color: #39FF14;            /* Classic &quot;Matrix&quot; green digits */
+font: bold 18pt &quot;Courier New&quot;;</string>
+    </property>
+    <property name="digitCount">
+     <number>7</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="scoreLabel_2">
+    <property name="geometry">
+     <rect>
+      <x>850</x>
+      <y>72</y>
+      <width>209</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Courier New</family>
+      <pointsize>18</pointsize>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #1a1a1a; /* Pitch black */
+border: 3px solid #333333; /* Dark gray frame */
+color: #39FF14;            /* Classic &quot;Matrix&quot; green digits */
+font: bold 18pt &quot;Courier New&quot;;</string>
+    </property>
+    <property name="text">
+     <string>High-Score</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+   </widget>
+   <zorder>gameOverabel</zorder>
    <zorder>graphicsView</zorder>
-   <zorder>lcdNumber</zorder>
-   <zorder>label_2</zorder>
-   <zorder>lcdNumber</zorder>
-   <zorder>label_2</zorder>
+   <zorder>scorelcdNumber</zorder>
+   <zorder>scoreLabel</zorder>
+   <zorder>scorelcdNumber</zorder>
+   <zorder>scoreLabel</zorder>
    <zorder>resetBtn</zorder>
    <zorder>backBtn</zorder>
-   <zorder>lcdNumber_2</zorder>
-   <zorder>label_3</zorder>
+   <zorder>timelcdNumber</zorder>
+   <zorder>timeLabel</zorder>
+   <zorder>countdownTimeLabel</zorder>
+   <zorder>highScorelcdNumber</zorder>
+   <zorder>scoreLabel_2</zorder>
   </widget>
  </widget>
  <resources/>

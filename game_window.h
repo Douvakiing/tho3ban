@@ -32,6 +32,8 @@ private slots:
 
     void on_resetBtn_clicked();
 
+    void on_backBtn_clicked();
+
 private:
     Ui::game_window *ui;
     QGraphicsScene *scene;
@@ -44,6 +46,10 @@ private:
 
     int boardCols = 20;
     int boardRows = 20;
+    int secondsElapsed = 0;
+    int countdownValue = 3;
+    QTimer *countdownTimer = nullptr;
+    void handleCountdownTick();
 
     QTimer *gameTimer = nullptr;
 
@@ -53,6 +59,7 @@ private:
     void drawApple();
     void fitBoardToView();
     void updateTimerDisplay();
+    void roundStartAnimation();
 
     void resizeEvent(QResizeEvent *event) override;
     void showEvent(QShowEvent *event) override;

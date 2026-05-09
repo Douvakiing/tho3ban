@@ -12,6 +12,7 @@
 
 #include "src/game.h"
 #include "src/types.h"
+#include "tho3ban.h"
 
 game_window::game_window(QWidget *parent)
     : QMainWindow(parent)
@@ -28,13 +29,13 @@ game_window::game_window(QWidget *parent)
 
     ui->graphicsView->setFocusPolicy(Qt::StrongFocus);
     ui->graphicsView->installEventFilter(this);
-    ui->label_2->setStyleSheet(ui->lcdNumber->styleSheet());
+    ui->scoreLabel->setStyleSheet(ui->scorelcdNumber->styleSheet());
 
     drawGameBoard();
 
     gameTimer = new QTimer(this);
     connect(gameTimer, &QTimer::timeout, this, &game_window::onGameTick);
-    gameTimer->start(100);
+    roundStartAnimation();
 }
 
 game_window::~game_window()
@@ -44,17 +45,20 @@ game_window::~game_window()
 
 void game_window::onGameTick()
 {
-    static int secondsElapsed = 0;
     secondsElapsed++;
     game.update(pendingDirection);
-    ui->lcdNumber->display(game.getCurrentScore());
+    ui->scorelcdNumber->display(game.getCurrentScore());
+    ui->highScorelcdNumber->display(game.getHighScore());
     QTime displayTime(0, 0);
     displayTime = displayTime.addSecs(secondsElapsed);
 
-    ui->lcdNumber_2->display(displayTime.toString("mm:ss"));
+    ui->timelcdNumber->display(displayTime.toString("h:mm:ss"));
+    if (secondsElapsed >= 360000) { // Up to 99 hours
+        ui->timelcdNumber->display("99:59:59"); // freeze clock
+    }
     if (game.getGameState()) {
         gameTimer->stop();
-        ui->label->raise();
+        ui->gameOverabel->raise();
     } else {
         drawGameBoard();
     }
@@ -164,15 +168,86 @@ void game_window::showEvent(QShowEvent *event)
 void game_window::on_resetBtn_clicked()
 {
     game.resetGame();
-    ui->label->hide();
+    ui->gameOverabel->hide();
     ui->graphicsView->setFocus();
-    gameTimer->start(100);
+    this->secondsElapsed = 0;
+    ui->scorelcdNumber->display(0);
+    ui->timelcdNumber->display("0000:00");
+    roundStartAnimation();
 }
 void game_window::updateTimerDisplay() {
     QTime currentTime = QTime::currentTime();
 
-    QString text = currentTime.toString("mm:ss");
+    QString text = currentTime.toString("h:mm:ss");
 
-    ui->lcdNumber_2->display(text);
+    ui->timelcdNumber->display(text);
 }
 
+
+void game_window::on_backBtn_clicked()
+{
+    gameTimer->stop();
+    tho3ban *mainMenu = new tho3ban();
+    this->setAttribute(Qt::WA_DeleteOnClose);
+    mainMenu->show();
+    this->close();
+}
+void game_window::roundStartAnimation()
+{
+    gameTimer->stop(); // Pause the game loop
+
+    // SAFETY CHECK: If a timer already exists (e.g., user clicked Reset twice), kill it.
+    if (countdownTimer != nullptr) {
+        countdownTimer->stop();
+        countdownTimer->deleteLater();
+        countdownTimer = nullptr;
+    }
+
+    countdownValue = 3;
+    ui->countdownTimeLabel->show();
+    ui->countdownTimeLabel->raise();
+
+    // Create and start the new timer
+    countdownTimer = new QTimer(this);
+    connect(countdownTimer, &QTimer::timeout, this, &game_window::handleCountdownTick);
+
+    handleCountdownTick(); // Trigger '3' immediately
+    countdownTimer->start(1000); // 1 second intervals
+}
+
+void game_window::handleCountdownTick()
+{
+    if (countdownValue > 0) {
+        ui->countdownTimeLabel->setText(QString::number(countdownValue));
+        ui->countdownTimeLabel->setStyleSheet(
+            "color: #FF00FF; font-size: 80px; font-weight: bold; background: transparent;"
+            );
+        countdownValue--;
+    }
+    else if (countdownValue == 0) {
+        ui->countdownTimeLabel->setText("GO!");
+        ui->countdownTimeLabel->setStyleSheet(
+            "color: #00FFFF; font-size: 80px; font-weight: bold; background: transparent;"
+            );
+        countdownValue--;
+
+        // Let's speed up the timer so "GO!" disappears faster
+        countdownTimer->setInterval(500);
+    }
+    else {
+        // CLEANUP PHASE
+        countdownTimer->stop();
+        ui->countdownTimeLabel->hide();
+        ui->countdownTimeLabel->clear(); // Wipe the text
+
+        // Return focus to the game board so arrow keys work immediately
+        ui->graphicsView->setFocus();
+
+        // Start the snake!
+        gameTimer->start(100);
+
+        // Safely delete the timer from RAM
+        countdownTimer->deleteLater();
+        countdownTimer = nullptr;
+    }
+}
