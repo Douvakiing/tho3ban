@@ -46,6 +46,10 @@ class Game
 
         void draw();
 
+        int getScore(){
+            return score;
+        }
+
 };
 
 #endif

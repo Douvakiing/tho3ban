@@ -33,6 +33,18 @@ int main()
             {
                 window.close();
             }
+			if (currentState == GameState::Menu) 
+			{
+				// Pass the full event to the menu to handle clicks and hovers
+				menu.handleEvent(*event, currentState);
+				
+				// If the menu changed the state to Playing (via click or Enter)
+				if (currentState == GameState::Playing) {
+					game.start();
+					inputDirection = Direction::Right;
+					tickClock.restart();
+				}
+			}
 
             if ( const auto* keyPressed = event->getIf<sf::Event::KeyPressed>() )
             {

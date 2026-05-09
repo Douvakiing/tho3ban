@@ -52,6 +52,41 @@ Menu::Menu(float windowWidth, float windowHeight)
         std::cout << "WARNING: Could not load font! Make sure arial.ttf is in the resources folder.\n";
     }
 }
+// Add this right below your Menu constructor in src/core/menu.cpp
+
+void Menu::handleEvent(const sf::Event& event, GameState& currentState) {
+    // 1. Check for Mouse Hover
+    if (const auto* mouseMove = event.getIf<sf::Event::MouseMoved>()) {
+        sf::Vector2f mousePos(static_cast<float>(mouseMove->position.x), static_cast<float>(mouseMove->position.y));
+        
+        if (buttonShape.getGlobalBounds().contains(mousePos)) {
+            buttonShape.setFillColor(sf::Color(80, 80, 80)); // Hover color (Lighter Gray)
+            buttonShape.setOutlineColor(sf::Color::White);   // Highlight outline
+        } else {
+            buttonShape.setFillColor(sf::Color(40, 40, 40)); // Default color (Dark Gray)
+            buttonShape.setOutlineColor(sf::Color::Green);   // Default outline
+        }
+    }
+
+    // 2. Check for Mouse Click
+    if (const auto* mouseButton = event.getIf<sf::Event::MouseButtonPressed>()) {
+        if (mouseButton->button == sf::Mouse::Button::Left) {
+            sf::Vector2f mousePos(static_cast<float>(mouseButton->position.x), static_cast<float>(mouseButton->position.y));
+            
+            // If they clicked inside the button, start the game
+            if (buttonShape.getGlobalBounds().contains(mousePos)) {
+                currentState = GameState::Playing; 
+            }
+        }
+    }
+
+    // 3. Keep the Enter Key functionality
+    if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>()) {
+        if (keyPressed->scancode == sf::Keyboard::Scancode::Enter) {
+            currentState = GameState::Playing; 
+        }
+    }
+}
 
 void Menu::handleInput(sf::Keyboard::Scancode key, GameState& currentState) {
     if (key == sf::Keyboard::Scancode::Enter) {
