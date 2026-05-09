@@ -1,10 +1,11 @@
+#include <cstdlib>
 #include "apple.h"
 #include "game.h"
 #include "snake.h"
 
 Game::Game()
     : snake( Position{ 5, 5 }, 3 )
-    , apple( Position{ 0, 0 } )
+    , apple( Position{std::rand() % Game::getGridSize() , std::rand() % Game::getGridSize()} )
     , isGameOver( false )
     , gridSize( totalSize ) // HARD CODED FOR NOW, CAUSES A RUNTIME ERROR WHEN totalSize IS USED
     , CurrentScore( 0 )
