@@ -23,7 +23,7 @@ class Game
         
         Direction inputCache;
         
-        vector<vector<bool>> grid; // NEW GRID FOR COLLISION DETECTION
+        bool grid[20][20] = {}; // NEW GRID FOR COLLISION DETECTION
         bool initialized = false; // FOR FIRST TIME INITALIZATION
         
         void updateOccupation();

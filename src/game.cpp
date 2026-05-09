@@ -11,7 +11,7 @@ Game::Game()
     , HighScore(0)
     , speed( 1 )
     , inputCache( Direction::Right )
-    , grid(totalSize, vector<bool>(20, false)) // GRID INITIALIZATION
+    , grid{} // GRID INITIALIZATION
 {
 }
 
@@ -43,7 +43,7 @@ void Game::update(Direction input){
         do{
             newApplePos.randomizePosition();
         }
-        while( grid[newApplePos.getX()][newApplePos.getY()] );
+        while( grid[newApplePos.getY()][newApplePos.getX()] );
         apple = Apple(newApplePos);
     }
     else{
@@ -77,7 +77,12 @@ void Game::resetGame(){
     CurrentScore = 0;
     speed = 1;
     inputCache = Direction::Right;
-    grid = vector<vector<bool>>(totalSize, vector<bool>(20, false)); // GRID INITIALIZATION
+    bool temp[20][20]{};
+    for(int i =0;i<20;i++){
+        for(int j = 0;j<20;j++){
+            grid[i][j] =false;
+        }
+    }
 }
 
 int Game::getGridSize() {
