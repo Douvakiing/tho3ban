@@ -21,6 +21,7 @@ void Game::update(Direction input){
     updateOccupation();
     snake.move(inputCache);
 }
+
 void Game::updateOccupation(){
     if(!initialized){
         for(int i = 0; i < snake.getSize(); i++){
@@ -29,7 +30,11 @@ void Game::updateOccupation(){
         initialized = true;
     }
     else{
-        // TBD
+        grid[snake.getTail().getY()][snake.getTail().getX()] = false;
+
+        Position newHead = snake.getNewPosition(inputCache);
+        grid[newHead.getY()][newHead.getX()] = true;
+
     }
 }
 

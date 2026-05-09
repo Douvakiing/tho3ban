@@ -16,17 +16,18 @@ class Snake
 
         int size;
 
-        Position getNewPosition(Direction direction);
-
-    public:
+        
+        public:
         Snake(Position position, int snakeSize);
         ~Snake();
-
+        
         Position getHead();
         Position getTail();
         int getSize();
-
+        
         Position move(Direction direction, bool grow = false);
+        
+        Position getNewPosition(Direction direction);
 };
 
 #endif
