@@ -2,6 +2,7 @@
 #define GAME_WINDOW_H
 
 #include <QMainWindow>
+#include <QColor>
 #include <QGraphicsScene>
 #include <QPoint>
 #include <QResizeEvent>
@@ -28,14 +29,23 @@ private:
     Ui::game_window *ui;
     QGraphicsScene *scene;
 
+    const QColor orangeLight{251, 193, 78};
+    const QColor orangeDark{252, 178, 79};
+    const QColor appleColor{255, 0, 0};
+
     QVector<QPoint> snake;
+    QPoint apple;
+
     QPoint direction{1, 0};
-    int boardCols = 30;
-    int boardRows = 30;
+    int boardCols = 20;
+    int boardRows = 20;
 
     QTimer *gameTimer = nullptr;
 
+    void drawGameBoard();
+    void drawGrid(QColor lightColor, QColor darkColor);
     void drawSnake();
+    void drawApple();
     void fitBoardToView();
 
     void resizeEvent(QResizeEvent *event) override;

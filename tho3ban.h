@@ -17,6 +17,9 @@ public:
     explicit tho3ban(QWidget *parent = nullptr);
     ~tho3ban() override;
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::tho3ban *ui;
 };

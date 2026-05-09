@@ -19,10 +19,11 @@ game_window::game_window(QWidget *parent)
     ui->graphicsView->setRenderHint(QPainter::Antialiasing, false);
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
+    ui->graphicsView->setBackgroundBrush(QBrush(QColor(204, 102, 0)));
 
     snake = {QPoint(10, 10), QPoint(9, 10), QPoint(8, 10)};
-    drawSnake();
+    apple = QPoint(12, 10);
+    drawGameBoard();
 
     gameTimer = new QTimer(this);
     connect(gameTimer, &QTimer::timeout, this, &game_window::onGameTick);
@@ -48,23 +49,45 @@ void game_window::onGameTick()
     snake.prepend(next);
     snake.removeLast();
 
+    drawGameBoard();
+}
+
+void game_window::drawGameBoard()
+{
+    scene->setSceneRect(0, 0, boardCols, boardRows);
+    scene->clear();
+
+    drawGrid(orangeLight, orangeDark);
     drawSnake();
+    drawApple();
+
+    fitBoardToView();
 }
 
 void game_window::drawSnake()
 {
-    scene->setSceneRect(0, 0, boardCols, boardRows);
-    scene->clear();
-    scene->addRect(scene->sceneRect(), QPen(Qt::NoPen), QBrush(Qt::black));
-
     for (int i = 0; i < snake.size(); ++i) {
         const QPoint cell = snake[i];
         const QRectF rect(cell.x(), cell.y(), 1, 1);
         const QBrush color = (i == 0) ? QBrush(Qt::green) : QBrush(QColor(0, 180, 0));
         scene->addRect(rect, QPen(Qt::NoPen), color);
     }
+}
 
-    fitBoardToView();
+void game_window::drawApple()
+{
+    scene->addRect(QRectF(apple.x(), apple.y(), 1, 1), QPen(Qt::NoPen), QBrush(appleColor));
+}
+
+void game_window::drawGrid(QColor lightColor, QColor darkColor)
+{
+    for (int y = 0; y < boardRows; ++y) {
+        for (int x = 0; x < boardCols; ++x) {
+            const bool light = ((x + y) % 2) == 0;
+            scene->addRect(QRectF(x, y, 1, 1), QPen(Qt::NoPen),
+                           QBrush(light ? lightColor : darkColor));
+        }
+    }
 }
 
 void game_window::fitBoardToView()
