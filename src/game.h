@@ -17,7 +17,8 @@ class Game
         Apple apple;
         bool isGameOver;
         int gridSize;
-        int score;
+        int CurrentScore;
+        int HighScore;
         int speed;
         
         Direction inputCache;
@@ -30,6 +31,7 @@ class Game
         Game();
         ~Game();
 
+
         Snake getSnake(){
             return snake;
         }
@@ -38,7 +40,7 @@ class Game
             snake = Snake(Position{5,5}, 3);
             apple = Apple(Position{0,0});
             isGameOver = false;
-            score = 0;
+            CurrentScore = 0;
             speed = 1;
         };
 
@@ -46,8 +48,14 @@ class Game
 
         void draw();
 
-        int getScore(){
-            return score;
+        void resetGame();
+
+        int getCurrentScore(){
+            return CurrentScore;
+        }
+
+        int getHighScore(){
+            return HighScore;
         }
 
 };
