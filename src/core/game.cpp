@@ -17,8 +17,21 @@ Game::~Game() = default;
 void Game::draw() {}
 
 void Game::update(Direction input){
+    // Don't move if we're dead
+    if(isGameOver) return;
+    
     if (!isOppositeDirection(input, inputCache)) inputCache = input;
+    
+    // self collision
+    Position newHead = snake.getNewPosition(inputCache);
+    if(grid[newHead.getY()][newHead.getX()] == true && newHead != snake.getTail()){
+
+         isGameOver = true;
+         return;
+    }
+
     updateOccupation();
+
     snake.move(inputCache);
 }
 
