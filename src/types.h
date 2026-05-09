@@ -18,7 +18,7 @@ class Position
         void setY(int y);
         void setPosition(int x, int y);
 
-        void randomizePosition(int limit);
+        void randomizePosition();
         
         Position operator+( const Position& rhs );
         

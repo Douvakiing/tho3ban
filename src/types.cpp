@@ -15,19 +15,23 @@ int Position::getY(){
     return this->y;
 }
 void Position::setX(int x){
-    this->x = x;
+    int limit = Game::getGridSize();
+    this->x = (x % limit + limit) % limit;
 }
 void Position::setY(int y){
-    this->y = y;
+    int limit = Game::getGridSize();
+    this->y = (y % limit + limit) % limit;
 }
 void Position::setPosition(int x, int y){
-    this->x = x;
-    this->y = y;
+    int limit = Game::getGridSize();
+    this->x = (x % limit + limit) % limit;
+    this->y = (y % limit + limit) % limit;
 }
 
-void Position::randomizePosition(int limit){
-    this->x = std::rand() % limit + 1;
-    this->y = std::rand() % limit + 1;
+void Position::randomizePosition(){
+    int limit = Game::getGridSize();
+    this->x = std::rand() % limit;
+    this->y = std::rand() % limit;
 }
 
 Position Position::operator+( const Position& rhs )

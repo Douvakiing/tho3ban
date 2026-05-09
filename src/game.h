@@ -11,7 +11,7 @@ using namespace std;
 class Game
 {
     private:
-        const int totalSize = 20; // NEW VARIABLE TO ADJUST SIZE
+        const int static totalSize = 20; // NEW VARIABLE TO ADJUST SIZE
 
         Snake snake;
         Apple apple;
@@ -31,6 +31,7 @@ class Game
         Game();
         ~Game();
 
+        static int getGridSize();
 
         Snake getSnake(){
             return snake;
