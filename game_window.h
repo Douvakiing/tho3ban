@@ -30,6 +30,8 @@ public:
 private slots:
     void onGameTick();
 
+    void on_resetBtn_clicked();
+
 private:
     Ui::game_window *ui;
     QGraphicsScene *scene;
@@ -50,7 +52,7 @@ private:
     void drawSnake();
     void drawApple();
     void fitBoardToView();
-    void gameOverScreen();
+    void updateTimerDisplay();
 
     void resizeEvent(QResizeEvent *event) override;
     void showEvent(QShowEvent *event) override;

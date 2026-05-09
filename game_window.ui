@@ -44,8 +44,8 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>40</y>
+      <x>240</x>
+      <y>60</y>
       <width>600</width>
       <height>600</height>
      </rect>
@@ -54,61 +54,136 @@
    <widget class="QLCDNumber" name="lcdNumber">
     <property name="geometry">
      <rect>
-      <x>960</x>
-      <y>120</y>
-      <width>64</width>
-      <height>23</height>
+      <x>850</x>
+      <y>360</y>
+      <width>209</width>
+      <height>81</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: #1a1a1a; /* Pitch black */
-    border: 3px solid #333333; /* Dark gray frame */
-    color: #39FF14;            /* Classic &quot;Matrix&quot; green digits */</string>
-    </property>
-   </widget>
-   <widget class="QFrame" name="gameOverFrame">
-    <property name="geometry">
-     <rect>
-      <x>2300</x>
-      <y>40</y>
-      <width>600</width>
-      <height>600</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgba(20, 0, 40, 200); /* Semi-transparent dark purple */border: 3px solid #ff0055;              /* Neon pink border */
-border-radius: 20px;</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Shadow::Raised</enum>
+border: 3px solid #333333; /* Dark gray frame */
+color: #39FF14;            /* Classic &quot;Matrix&quot; green digits */
+font: bold 22pt &quot;Courier New&quot;;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>280</y>
-      <width>201</width>
-      <height>71</height>
+      <x>440</x>
+      <y>325</y>
+      <width>200</width>
+      <height>70</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">color: #00FFFF; /* Neon Cyan text */
     font-family: &quot;Courier New&quot;;
     font-size: 36px;
-    font-weight: bold;</string>
+    font-weight: bold;
+background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0 rgba(255, 0, 36, 69), stop:0.341232 rgba(255, 13, 0, 69), stop:0.375 rgba(255, 13, 0, 69), stop:0.423533 rgba(255, 13, 0, 145), stop:0.45 rgba(255, 13, 0, 208), stop:0.477581 rgba(255, 13, 71, 130), stop:0.478673 rgba(255, 13, 0, 145), stop:0.518717 rgba(255, 13, 71, 130), stop:0.55 rgba(255, 13, 0, 255), stop:0.57754 rgba(255, 13, 0, 130), stop:0.625 rgba(255, 13, 0, 69), stop:1 rgba(255, 255, 0, 69));
+border-color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
      <string>Game Over</string>
     </property>
    </widget>
-   <zorder>gameOverFrame</zorder>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>850</x>
+      <y>272</y>
+      <width>209</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #1a1a1a; /* Pitch black */
+border: 3px solid #333333; /* Dark gray frame */
+color: #39FF14;            /* Classic &quot;Matrix&quot; green digits */
+font: bold 22pt &quot;Courier New&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Score</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="resetBtn">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>500</y>
+      <width>90</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Restart</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="backBtn">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>550</y>
+      <width>90</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;Back</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>360</y>
+      <width>209</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #1a1a1a; /* Pitch black */
+border: 3px solid #333333; /* Dark gray frame */
+color: #39FF14;            /* Classic &quot;Matrix&quot; green digits */
+font: bold 22pt &quot;Courier New&quot;;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>272</y>
+      <width>209</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #1a1a1a; /* Pitch black */
+border: 3px solid #333333; /* Dark gray frame */
+color: #39FF14;            /* Classic &quot;Matrix&quot; green digits */
+font: bold 22pt &quot;Courier New&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Time</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+   </widget>
    <zorder>label</zorder>
    <zorder>graphicsView</zorder>
    <zorder>lcdNumber</zorder>
+   <zorder>label_2</zorder>
+   <zorder>lcdNumber</zorder>
+   <zorder>label_2</zorder>
+   <zorder>resetBtn</zorder>
+   <zorder>backBtn</zorder>
+   <zorder>lcdNumber_2</zorder>
+   <zorder>label_3</zorder>
   </widget>
  </widget>
  <resources/>

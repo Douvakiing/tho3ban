@@ -8,6 +8,7 @@
 #include <QKeyEvent>
 #include <QShowEvent>
 #include <QTimer>
+#include <QTime>
 
 #include "src/game.h"
 #include "src/types.h"
@@ -27,6 +28,7 @@ game_window::game_window(QWidget *parent)
 
     ui->graphicsView->setFocusPolicy(Qt::StrongFocus);
     ui->graphicsView->installEventFilter(this);
+    ui->label_2->setStyleSheet(ui->lcdNumber->styleSheet());
 
     drawGameBoard();
 
@@ -42,11 +44,17 @@ game_window::~game_window()
 
 void game_window::onGameTick()
 {
+    static int secondsElapsed = 0;
+    secondsElapsed++;
     game.update(pendingDirection);
     ui->lcdNumber->display(game.getCurrentScore());
+    QTime displayTime(0, 0);
+    displayTime = displayTime.addSecs(secondsElapsed);
+
+    ui->lcdNumber_2->display(displayTime.toString("mm:ss"));
     if (game.getGameState()) {
         gameTimer->stop();
-        gameOverScreen();
+        ui->label->raise();
     } else {
         drawGameBoard();
     }
@@ -153,11 +161,18 @@ void game_window::showEvent(QShowEvent *event)
     fitBoardToView();
     ui->graphicsView->setFocus(Qt::OtherFocusReason);
 }
-void game_window::gameOverScreen()
+void game_window::on_resetBtn_clicked()
 {
-    ui->gameOverFrame->show();
-    ui->gameOverFrame->raise();
-    ui->label->raise();
-    ui->graphicsView->hide();
-
+    game.resetGame();
+    ui->label->hide();
+    ui->graphicsView->setFocus();
+    gameTimer->start(100);
 }
+void game_window::updateTimerDisplay() {
+    QTime currentTime = QTime::currentTime();
+
+    QString text = currentTime.toString("mm:ss");
+
+    ui->lcdNumber_2->display(text);
+}
+
