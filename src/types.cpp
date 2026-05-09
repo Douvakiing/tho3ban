@@ -5,8 +5,7 @@
 Position::Position(){}
 
 Position::Position(int x, int y){
-    this->x = x;
-    this->y = y;
+    this->setPosition(x, y);
 }
 int Position::getX(){
     return this->x;
