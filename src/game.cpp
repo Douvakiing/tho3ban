@@ -7,7 +7,8 @@ Game::Game()
     , apple( Position{ 0, 0 } )
     , isGameOver( false )
     , gridSize( totalSize ) // HARD CODED FOR NOW, CAUSES A RUNTIME ERROR WHEN totalSize IS USED
-    , score( 0 )
+    , CurrentScore( 0 )
+    , HighScore(0)
     , speed( 1 )
     , inputCache( Direction::Right )
     , grid(totalSize, vector<bool>(20, false)) // GRID INITIALIZATION
@@ -26,16 +27,17 @@ void Game::update(Direction input){
     // Self-collision
     Position newHead = snake.getNewPosition(inputCache);
     if(grid[newHead.getY()][newHead.getX()] == true && newHead != snake.getTail()){
-
+        
+        if(CurrentScore > HighScore) HighScore = CurrentScore;
          isGameOver = true;
          return;
     }
 
     updateOccupation();
 
-    // Increment score & randomize new apple position 
+    // Increment CurrentScore & randomize new apple position 
     if(newHead == apple.getPosition()) {
-        score += 100;
+        CurrentScore += 10;
         snake.move(inputCache, true);
         
         Position newApplePos;
@@ -63,4 +65,15 @@ void Game::updateOccupation(){
         grid[newHead.getY()][newHead.getX()] = true;
 
     }
+}
+
+void Game::resetGame(){
+    snake = Snake( Position{ 5, 5 }, 3 );
+    apple = Apple( Position{ 0, 0 } );
+    isGameOver = false;
+    gridSize = totalSize; // HARD CODED FOR NOW, CAUSES A RUNTIME ERROR WHEN totalSize IS USED
+    CurrentScore = 0;
+    speed = 1;
+    inputCache = Direction::Right;
+    grid = vector<vector<bool>>(totalSize, vector<bool>(20, false)); // GRID INITIALIZATION
 }
