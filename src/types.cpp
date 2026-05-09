@@ -7,10 +7,10 @@ Position::Position(){}
 Position::Position(int x, int y){
     this->setPosition(x, y);
 }
-int Position::getX(){
+int Position::getX() const {
     return this->x;
 }
-int Position::getY(){
+int Position::getY() const {
     return this->y;
 }
 void Position::setX(int x){

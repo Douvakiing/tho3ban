@@ -3,12 +3,17 @@
 
 #include <QMainWindow>
 #include <QColor>
+#include <QEvent>
 #include <QGraphicsScene>
+#include <QKeyEvent>
 #include <QPoint>
 #include <QResizeEvent>
 #include <QShowEvent>
 #include <QTimer>
 #include <QVector>
+
+#include "src/game.h"
+#include "src/types.h"
 
 namespace Ui {
 class game_window;
@@ -28,15 +33,13 @@ private slots:
 private:
     Ui::game_window *ui;
     QGraphicsScene *scene;
+    
+    Game game;
 
     const QColor orangeLight{251, 193, 78};
     const QColor orangeDark{252, 178, 79};
     const QColor appleColor{255, 0, 0};
 
-    QVector<QPoint> snake;
-    QPoint apple;
-
-    QPoint direction{1, 0};
     int boardCols = 20;
     int boardRows = 20;
 
@@ -50,6 +53,11 @@ private:
 
     void resizeEvent(QResizeEvent *event) override;
     void showEvent(QShowEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
+    Direction pendingDirection = Direction::Right;
+    bool applyDirectionKey(int key);
 };
 
 #endif // GAME_WINDOW_H

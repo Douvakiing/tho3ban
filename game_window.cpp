@@ -5,8 +5,12 @@
 #include <QPainter>
 #include <QPen>
 #include <QRectF>
+#include <QKeyEvent>
 #include <QShowEvent>
 #include <QTimer>
+
+#include "src/game.h"
+#include "src/types.h"
 
 game_window::game_window(QWidget *parent)
     : QMainWindow(parent)
@@ -21,8 +25,9 @@ game_window::game_window(QWidget *parent)
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setBackgroundBrush(QBrush(QColor(204, 102, 0)));
 
-    snake = {QPoint(10, 10), QPoint(9, 10), QPoint(8, 10)};
-    apple = QPoint(12, 10);
+    ui->graphicsView->setFocusPolicy(Qt::StrongFocus);
+    ui->graphicsView->installEventFilter(this);
+
     drawGameBoard();
 
     gameTimer = new QTimer(this);
@@ -37,19 +42,47 @@ game_window::~game_window()
 
 void game_window::onGameTick()
 {
-    if (snake.isEmpty())
-        return;
-
-    QPoint head = snake.front();
-    QPoint next = head + direction;
-
-    next.rx() = next.x() % boardCols;
-    next.ry() = next.y() % boardRows;
-
-    snake.prepend(next);
-    snake.removeLast();
-
+    game.update(pendingDirection);
     drawGameBoard();
+}
+
+bool game_window::applyDirectionKey(int key)
+{
+    switch (key) {
+    case Qt::Key_Left:
+    case Qt::Key_A:
+        pendingDirection = Direction::Left;
+        return true;
+    case Qt::Key_Right:
+    case Qt::Key_D:
+        pendingDirection = Direction::Right;
+        return true;
+    case Qt::Key_Up:
+    case Qt::Key_W:
+        pendingDirection = Direction::Up;
+        return true;
+    case Qt::Key_Down:
+    case Qt::Key_S:
+        pendingDirection = Direction::Down;
+        return true;
+    default:
+        return false;
+    }
+}
+
+void game_window::keyPressEvent(QKeyEvent *event)
+{
+    if (!applyDirectionKey(event->key()))
+        QMainWindow::keyPressEvent(event);
+}
+
+bool game_window::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == ui->graphicsView && event->type() == QEvent::KeyPress) {
+        if (applyDirectionKey(static_cast<QKeyEvent *>(event)->key()))
+            return true;
+    }
+    return QMainWindow::eventFilter(watched, event);
 }
 
 void game_window::drawGameBoard()
@@ -66,9 +99,9 @@ void game_window::drawGameBoard()
 
 void game_window::drawSnake()
 {
-    for (int i = 0; i < snake.size(); ++i) {
-        const QPoint cell = snake[i];
-        const QRectF rect(cell.x(), cell.y(), 1, 1);
+    for (int i = 0; i < game.getSnake().getSize(); ++i) {
+        const Position cell = game.getSnake().getBody()[i];
+        const QRectF rect(cell.getX(), cell.getY(), 1, 1);
         const QBrush color = (i == 0) ? QBrush(Qt::green) : QBrush(QColor(0, 180, 0));
         scene->addRect(rect, QPen(Qt::NoPen), color);
     }
@@ -76,7 +109,9 @@ void game_window::drawSnake()
 
 void game_window::drawApple()
 {
-    scene->addRect(QRectF(apple.x(), apple.y(), 1, 1), QPen(Qt::NoPen), QBrush(appleColor));
+    const Position apple = game.getApple().getPosition();
+    const QRectF rect(apple.getX(), apple.getY(), 1, 1);
+    scene->addRect(rect, QPen(Qt::NoPen), QBrush(appleColor));
 }
 
 void game_window::drawGrid(QColor lightColor, QColor darkColor)
@@ -110,4 +145,5 @@ void game_window::showEvent(QShowEvent *event)
 {
     QMainWindow::showEvent(event);
     fitBoardToView();
+    ui->graphicsView->setFocus(Qt::OtherFocusReason);
 }
