@@ -40,7 +40,12 @@ void Game::update(Direction input){
         snake.move(inputCache, true);
         
         Position newApplePos;
-        newApplePos.randomizePosition();
+        do{
+            newApplePos.randomizePosition(totalSize);
+        }
+        while( grid[newApplePos.getX()][newApplePos.getY()] );
+        
+>>>>>>> cec223faefb94a0853c13339c0f0363d15212070
         apple = Apple(newApplePos);
     }
     else{

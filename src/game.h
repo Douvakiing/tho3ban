@@ -37,6 +37,14 @@ class Game
             return snake;
         }
 
+        Apple getApple(){
+            return apple;
+        }
+
+        bool getGameState(){
+            return isGameOver;
+        }
+
         void start(){
             snake = Snake(Position{5,5}, 3);
             apple = Apple(Position{0,0});
