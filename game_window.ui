@@ -41,6 +41,15 @@
      <height>720</height>
     </size>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: qlineargradient(
+        spread:pad, 
+        x1:0, y1:0, x2:0, y2:1, 
+        stop:0 #0f0c29,     /* Very dark blue/black at the top */
+        stop:0.5 #302b63,   /* Deep purple in the middle */
+        stop:1 #24243e      /* Dark midnight blue at the bottom */
+    );</string>
+   </property>
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
@@ -49,6 +58,11 @@
       <width>600</width>
       <height>600</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(10, 5, 20, 200); /* Semi-transparent dark purple */
+    border: 2px solid #00FFFF;              /* Neon Cyan border around the game board */
+    border-radius: 5px;</string>
     </property>
    </widget>
    <widget class="QLCDNumber" name="scorelcdNumber">
@@ -114,32 +128,6 @@ font: bold 22pt &quot;Courier New&quot;;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignmentFlag::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="resetBtn">
-    <property name="geometry">
-     <rect>
-      <x>910</x>
-      <y>500</y>
-      <width>90</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Restart</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="backBtn">
-    <property name="geometry">
-     <rect>
-      <x>910</x>
-      <y>550</y>
-      <width>90</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;Back</string>
     </property>
    </widget>
    <widget class="QLCDNumber" name="timelcdNumber">
@@ -262,6 +250,87 @@ font: bold 18pt &quot;Courier New&quot;;</string>
     <property name="alignment">
      <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
+   </widget>
+   <widget class="QSplitter" name="splitter">
+    <property name="geometry">
+     <rect>
+      <x>889</x>
+      <y>488</y>
+      <width>111</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Orientation::Vertical</enum>
+    </property>
+    <widget class="QPushButton" name="resetBtn">
+     <property name="styleSheet">
+      <string notr="true">/* Normal State */
+QPushButton {
+    background-color: transparent; 
+    color: #00FFFF; /* Neon Cyan */
+    border: 2px solid #00FFFF; 
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: &quot;Courier New&quot;, Courier, monospace;
+    padding: 8px 15px;
+}
+
+/* Hover State (Lights up!) */
+QPushButton:hover {
+    background-color: rgba(0, 255, 255, 40); /* Adds a faint cyan glow behind the text */
+    border: 2px solid #FFFFFF; /* Border turns white to simulate glowing brighter */
+    color: #FFFFFF;
+}
+
+/* Pressed State (Flashes Pink) */
+QPushButton:pressed {
+    background-color: #FF00FF; /* Solid Neon Magenta */
+    color: #000000;            /* Dark text so it's readable against the pink */
+    border: 2px solid #FF00FF;
+    padding-top: 10px;         /* Creates a push-down effect */
+    padding-bottom: 6px;
+}</string>
+     </property>
+     <property name="text">
+      <string>Restart</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="backBtn">
+     <property name="styleSheet">
+      <string notr="true">/* Normal State */
+QPushButton {
+    background-color: transparent; 
+    color: #00FFFF; /* Neon Cyan */
+    border: 2px solid #00FFFF; 
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: &quot;Courier New&quot;, Courier, monospace;
+    padding: 8px 15px;
+}
+
+/* Hover State (Lights up!) */
+QPushButton:hover {
+    background-color: rgba(0, 255, 255, 40); /* Adds a faint cyan glow behind the text */
+    border: 2px solid #FFFFFF; /* Border turns white to simulate glowing brighter */
+    color: #FFFFFF;
+}
+
+/* Pressed State (Flashes Pink) */
+QPushButton:pressed {
+    background-color: #FF00FF; /* Solid Neon Magenta */
+    color: #000000;            /* Dark text so it's readable against the pink */
+    border: 2px solid #FF00FF;
+    padding-top: 10px;         /* Creates a push-down effect */
+    padding-bottom: 6px;
+}</string>
+     </property>
+     <property name="text">
+      <string>&lt;Back</string>
+     </property>
+    </widget>
    </widget>
    <zorder>gameOverabel</zorder>
    <zorder>graphicsView</zorder>

@@ -28,6 +28,7 @@ void Game::update(Direction input){
     // Self-collision
     Position newHead = snake.getNewPosition(inputCache);
     if(grid[newHead.getY()][newHead.getX()] == true && newHead != snake.getTail()){
+        if(CurrentScore > HighScore) HighScore = CurrentScore; 
          isGameOver = true;
          return;
     }
@@ -37,7 +38,6 @@ void Game::update(Direction input){
     // Increment CurrentScore & randomize new apple position 
     if(newHead == apple.getPosition()) {
         CurrentScore += 10;
-        if(CurrentScore > HighScore) HighScore = CurrentScore;
         snake.move(inputCache, true);
         
         Position newApplePos;
