@@ -9,6 +9,7 @@
 #include <QShowEvent>
 #include <QTimer>
 #include <QTime>
+#include <QGraphicsDropShadowEffect>
 
 #include "src/game.h"
 #include "src/types.h"
@@ -30,6 +31,17 @@ game_window::game_window(QWidget *parent)
     ui->graphicsView->setFocusPolicy(Qt::StrongFocus);
     ui->graphicsView->installEventFilter(this);
     ui->scoreLabel->setStyleSheet(ui->scorelcdNumber->styleSheet());
+    this->setWindowIcon(QIcon(":/resources/photo.png"));
+    this->setWindowTitle("Tho3ban++");
+     this->setFixedSize(1080,720);
+    this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    QGraphicsDropShadowEffect *jojoShadow = new QGraphicsDropShadowEffect();
+    jojoShadow->setBlurRadius(0); // Set to 0 for a hard, manga-style outline instead of a soft blur
+    jojoShadow->setOffset(6, 6);  // Push the shadow down and to the right for 3D depth
+    jojoShadow->setColor(QColor(0x4C1D95)); // Deep "Star Platinum" Purple
+
+    // Apply it to the title
+    ui->label->setGraphicsEffect(jojoShadow);
 
     drawGameBoard();
 

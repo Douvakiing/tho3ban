@@ -251,6 +251,34 @@ font: bold 18pt &quot;Courier New&quot;;</string>
      <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>15</y>
+      <width>120</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font-family: &quot;Impact&quot;, &quot;Arial Black&quot;, sans-serif; /* Heavy, thick fonts */
+    font-size: 20px;
+    font-weight: 900;
+    font-style: italic; /* JoJo text is almost always slanted */
+    
+    /* A striking gold gradient */
+    color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+        stop:0 #FFF7D6,   /* Bright yellow/white at the top */
+        stop:0.4 #FDE047, /* Solid gold */
+        stop:0.6 #EAB308, /* Darker gold */
+        stop:1 #CA8A04    /* Deep bronze at the bottom */
+    );
+    background: transparent;</string>
+    </property>
+    <property name="text">
+     <string>Tho3ban ++</string>
+    </property>
+   </widget>
    <widget class="QSplitter" name="splitter">
     <property name="geometry">
      <rect>
@@ -345,6 +373,7 @@ QPushButton:pressed {
    <zorder>countdownTimeLabel</zorder>
    <zorder>highScorelcdNumber</zorder>
    <zorder>scoreLabel_2</zorder>
+   <zorder>label</zorder>
   </widget>
  </widget>
  <resources/>

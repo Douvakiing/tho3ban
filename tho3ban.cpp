@@ -9,6 +9,9 @@ tho3ban::tho3ban(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowIcon(QIcon(":/resources/photo.png"));
+    this->setWindowTitle("Tho3ban++");
+    this->setFixedSize(1080,720);
+    this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
 }
 
 tho3ban::~tho3ban()
