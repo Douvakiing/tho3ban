@@ -51,6 +51,64 @@
      </rect>
     </property>
    </widget>
+   <widget class="QLCDNumber" name="lcdNumber">
+    <property name="geometry">
+     <rect>
+      <x>960</x>
+      <y>120</y>
+      <width>64</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #1a1a1a; /* Pitch black */
+    border: 3px solid #333333; /* Dark gray frame */
+    color: #39FF14;            /* Classic &quot;Matrix&quot; green digits */</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="gameOverFrame">
+    <property name="geometry">
+     <rect>
+      <x>2300</x>
+      <y>40</y>
+      <width>600</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(20, 0, 40, 200); /* Semi-transparent dark purple */border: 3px solid #ff0055;              /* Neon pink border */
+border-radius: 20px;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>280</y>
+      <width>201</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #00FFFF; /* Neon Cyan text */
+    font-family: &quot;Courier New&quot;;
+    font-size: 36px;
+    font-weight: bold;</string>
+    </property>
+    <property name="text">
+     <string>Game Over</string>
+    </property>
+   </widget>
+   <zorder>gameOverFrame</zorder>
+   <zorder>label</zorder>
+   <zorder>graphicsView</zorder>
+   <zorder>lcdNumber</zorder>
   </widget>
  </widget>
  <resources/>

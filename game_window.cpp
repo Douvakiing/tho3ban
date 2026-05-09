@@ -43,7 +43,13 @@ game_window::~game_window()
 void game_window::onGameTick()
 {
     game.update(pendingDirection);
-    drawGameBoard();
+    ui->lcdNumber->display(game.getCurrentScore());
+    if (game.getGameState()) {
+        gameTimer->stop();
+        gameOverScreen();
+    } else {
+        drawGameBoard();
+    }
 }
 
 bool game_window::applyDirectionKey(int key)
@@ -146,4 +152,12 @@ void game_window::showEvent(QShowEvent *event)
     QMainWindow::showEvent(event);
     fitBoardToView();
     ui->graphicsView->setFocus(Qt::OtherFocusReason);
+}
+void game_window::gameOverScreen()
+{
+    ui->gameOverFrame->show();
+    ui->gameOverFrame->raise();
+    ui->label->raise();
+    ui->graphicsView->hide();
+
 }

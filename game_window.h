@@ -50,6 +50,7 @@ private:
     void drawSnake();
     void drawApple();
     void fitBoardToView();
+    void gameOverScreen();
 
     void resizeEvent(QResizeEvent *event) override;
     void showEvent(QShowEvent *event) override;
