@@ -13,6 +13,7 @@ qt_add_executable(tho3ban
     tho3ban.ui
     src/apple.cpp src/apple.h src/game.cpp src/game.h   src/snake.cpp src/snake.h src/types.cpp src/types.h
     .gitignore
+    game_window.h game_window.cpp game_window.ui
 
 )
 
