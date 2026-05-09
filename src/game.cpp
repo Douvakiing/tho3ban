@@ -56,7 +56,7 @@ void Game::update(Direction input){
 void Game::updateOccupation(){
     if(!initialized){
         for(int i = 0; i < snake.getSize(); i++){
-            grid[snake.getHead().getY()][snake.getHead().getX() - i] = true;
+            grid[snake.getHead().getY()][snake.getHead().getX() - i + 1] = true;
         }
         initialized = true;
     }
