@@ -72,7 +72,7 @@ void Game::updateOccupation(){
 
 void Game::resetGame(){
     snake = Snake( Position{ 5, 5 }, 3 );
-    apple = Apple( Position{ 0, 0 } );
+    apple = Apple( Position{std::rand() % Game::getGridSize() , std::rand() % Game::getGridSize()} );
     isGameOver = false;
     gridSize = totalSize; // HARD CODED FOR NOW, CAUSES A RUNTIME ERROR WHEN totalSize IS USED
     CurrentScore = 0;
