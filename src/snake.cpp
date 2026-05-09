@@ -2,7 +2,6 @@
 
 Snake::Snake(Position position, int snakeSize){
     this->body.push_front(position);
-    this->head = position;
     this->size = snakeSize;
 
 
@@ -16,29 +15,29 @@ Snake::~Snake(){
 };
 
 Position Snake::getNewPosition(Direction direction){
-    Position newPosition = this->head;
+    Position newPosition = this->getHead();
     switch (direction){
         case Direction::Up:
-            newPosition = Position(this->head.getX(), this->head.getY() - 1);
+            newPosition = Position(this->getHead().getX(), this->getHead().getY() - 1);
             break;
         case Direction::Down:
-            newPosition = Position(this->head.getX(), this->head.getY() + 1);
+            newPosition = Position(this->getHead().getX(), this->getHead().getY() + 1);
             break;
         case Direction::Left:
-            newPosition = Position(this->head.getX() - 1 , this->head.getY());
+            newPosition = Position(this->getHead().getX() - 1 , this->getHead().getY());
             break;
         case Direction::Right:
-            newPosition = Position(this->head.getX() + 1, this->head.getY());
+            newPosition = Position(this->getHead().getX() + 1, this->getHead().getY());
             break;
     }
     return newPosition;
 }
 
 Position Snake::getHead(){
-    return this->head;
+    return this->body.front();
 };
 Position Snake::getTail(){
-    return this->tail;
+    return this->body.back();
 };
 int Snake::getSize(){
     return this->size;
@@ -57,8 +56,8 @@ Position Snake::move(Direction direction, bool grow){
         size++;
     }
 
-    this->head = newPosition;
-    this->tail = this->body.back();
+    this->getHead() = newPosition;
+    this->getTail() = this->body.back();
 
     return newPosition;
 };

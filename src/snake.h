@@ -11,8 +11,6 @@ class Snake
 {
     private:
         deque<Position> body;
-        Position head;
-        Position tail;
 
         int size;
 
