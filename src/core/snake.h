@@ -28,6 +28,8 @@ class Snake
         Position move(Direction direction, bool grow = false);
         
         Position getNewPosition(Direction direction);
+
+        deque<Position> getBody();
 };
 
 #endif
