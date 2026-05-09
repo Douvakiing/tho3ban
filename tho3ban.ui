@@ -64,7 +64,8 @@
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(0, 170, 255);
-background-color: rgb(0, 0, 0);</string>
+background-color: rgb(0, 0, 0);
+</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Shape::StyledPanel</enum>
@@ -136,7 +137,7 @@ background-color: qconicalgradient(cx:0.5, cy:0.5, angle:315.2, stop:0 rgba(255,
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="resources/resources.qrc">:/image/photo.jpg</pixmap>
+      <pixmap resource="assets.qrc">:/resources/photo.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -146,7 +147,7 @@ background-color: qconicalgradient(cx:0.5, cy:0.5, angle:315.2, stop:0 rgba(255,
   </widget>
  </widget>
  <resources>
-  <include location="resources/resources.qrc"/>
+  <include location="assets.qrc"/>
  </resources>
  <connections/>
 </ui>

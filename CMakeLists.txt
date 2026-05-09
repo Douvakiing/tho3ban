@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 project(tho3ban LANGUAGES CXX)
+set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 
@@ -14,7 +15,8 @@ qt_add_executable(tho3ban
     src/apple.cpp src/apple.h src/game.cpp src/game.h   src/snake.cpp src/snake.h src/types.cpp src/types.h
     .gitignore
     game_window.h game_window.cpp game_window.ui
-    resources/resources.qrc
+    assets.qrc
+
 
 )
 

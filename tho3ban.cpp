@@ -1,12 +1,14 @@
 #include "tho3ban.h"
 #include "ui_tho3ban.h"
 #include "game_window.h"
+#include <QIcon>
 
 tho3ban::tho3ban(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::tho3ban)
 {
     ui->setupUi(this);
+    this->setWindowIcon(QIcon(":/resources/photo.png"));
 }
 
 tho3ban::~tho3ban()
@@ -29,5 +31,11 @@ void tho3ban::on_pushButton_clicked()
 
     // 4. Hide the main menu
     this->hide();
+}
+
+
+void tho3ban::on_pushButton_2_clicked()
+{
+    QApplication::quit();
 }
 
