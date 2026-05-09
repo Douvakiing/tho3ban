@@ -1,3 +1,4 @@
+#include "apple.h"
 #include "game.h"
 #include "snake.h"
 
@@ -22,7 +23,7 @@ void Game::update(Direction input){
     
     if (!isOppositeDirection(input, inputCache)) inputCache = input;
     
-    // self collision
+    // Self-collision
     Position newHead = snake.getNewPosition(inputCache);
     if(grid[newHead.getY()][newHead.getX()] == true && newHead != snake.getTail()){
 
@@ -32,7 +33,20 @@ void Game::update(Direction input){
 
     updateOccupation();
 
-    snake.move(inputCache);
+    // Increment score & randomize new apple position 
+    if(newHead == apple.getPosition()) {
+        score += 100;
+        snake.move(inputCache, true);
+        
+        Position newApplePos;
+        newApplePos.randomizePosition(totalSize);
+        apple = Apple(newApplePos);
+    }
+    else{
+
+        snake.move(inputCache, false); 
+    }
+    
 }
 
 void Game::updateOccupation(){
@@ -50,4 +64,3 @@ void Game::updateOccupation(){
 
     }
 }
-

@@ -30,6 +30,7 @@ class Game
         Game();
         ~Game();
 
+
         Snake getSnake(){
             return snake;
         }

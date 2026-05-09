@@ -1,4 +1,6 @@
+#include <cstdlib>
 #include "types.h"
+#include "game.h"
 
 Position::Position(){}
 
@@ -21,6 +23,11 @@ void Position::setY(int y){
 void Position::setPosition(int x, int y){
     this->x = x;
     this->y = y;
+}
+
+void Position::randomizePosition(int limit){
+    this->x = std::rand() % limit + 1;
+    this->y = std::rand() % limit + 1;
 }
 
 Position Position::operator+( const Position& rhs )
