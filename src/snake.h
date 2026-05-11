@@ -13,7 +13,6 @@ class Snake
         deque<Position> body;
 
         int size;
-
         
         public:
         Snake(Position position, int snakeSize);
