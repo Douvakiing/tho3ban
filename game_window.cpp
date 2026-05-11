@@ -44,7 +44,7 @@ game_window::game_window(QWidget *parent)
 
     // Apply it to the title
     ui->label->setGraphicsEffect(jojoShadow);
-    // ✅ ADD THESE TWO LINES INSTEAD:
+
     // This sets the scene size and calls our optimized grid function ONCE.
     scene->setSceneRect(0, 0, boardCols, boardRows);
     drawGrid(orangeLight, orangeDark);
