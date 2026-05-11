@@ -47,6 +47,7 @@ private:
     int boardCols = 20;
     int boardRows = 20;
     int secondsElapsed = 0;
+    int tickCounter = 0;
     int countdownValue = 3;
     QTimer *countdownTimer = nullptr;
     void handleCountdownTick();

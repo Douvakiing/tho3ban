@@ -31,6 +31,7 @@ game_window::game_window(QWidget *parent)
     ui->graphicsView->setFocusPolicy(Qt::StrongFocus);
     ui->graphicsView->installEventFilter(this);
     ui->scoreLabel->setStyleSheet(ui->scorelcdNumber->styleSheet());
+    ui->timelcdNumber->display("0:00:00");
     this->setWindowIcon(QIcon(":/resources/photo.png"));
     this->setWindowTitle("Tho3ban++");
      this->setFixedSize(1080,720);
@@ -57,17 +58,29 @@ game_window::~game_window()
 
 void game_window::onGameTick()
 {
-    secondsElapsed++;
+    // 1. Increment ticks (each tick is 100ms)
+    tickCounter++;
+
+    // 2. Only update seconds and UI every 10 ticks (1 second)
+    if (tickCounter >= 10) {
+        secondsElapsed++;
+        tickCounter = 0; // Reset for the next second
+
+        // Update the display only when the second actually changes
+        QTime displayTime(0, 0);
+        displayTime = displayTime.addSecs(secondsElapsed);
+        ui->timelcdNumber->display(displayTime.toString("h:mm:ss"));
+    }
+
+    // 3. Move the snake and check game state every tick (keeps movement smooth)
     game.update(pendingDirection);
     ui->scorelcdNumber->display(game.getCurrentScore());
     ui->highScorelcdNumber->display(game.getHighScore());
-    QTime displayTime(0, 0);
-    displayTime = displayTime.addSecs(secondsElapsed);
 
-    ui->timelcdNumber->display(displayTime.toString("h:mm:ss"));
-    if (secondsElapsed >= 360000) { // Up to 99 hours
-        ui->timelcdNumber->display("99:59:59"); // freeze clock
+    if (secondsElapsed >= 359999) { // Limit to 99:59:59 cap
+        ui->timelcdNumber->display("99:59:59");
     }
+
     if (game.getGameState()) {
         gameTimer->stop();
         ui->gameOverabel->show();
@@ -200,17 +213,12 @@ void game_window::on_resetBtn_clicked()
     ui->gameOverabel->hide();
     ui->graphicsView->setFocus();
     this->secondsElapsed = 0;
+    this->tickCounter = 0;
     ui->scorelcdNumber->display(0);
-    ui->timelcdNumber->display("0000:00");
+    ui->timelcdNumber->display("0:00:00");
     roundStartAnimation();
 }
-void game_window::updateTimerDisplay() {
-    QTime currentTime = QTime::currentTime();
 
-    QString text = currentTime.toString("h:mm:ss");
-
-    ui->timelcdNumber->display(text);
-}
 
 
 void game_window::on_backBtn_clicked()
