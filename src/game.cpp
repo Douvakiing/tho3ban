@@ -7,18 +7,18 @@ Game::Game()
     : snake( Position{ 5, 5 }, 3 )
     , apple( Position{0,0} )
     , isGameOver( false )
-    , gridSize( totalSize ) // HARD CODED FOR NOW, CAUSES A RUNTIME ERROR WHEN totalSize IS USED
+    , gridSize( totalSize ) // copies the static grid size into this game instance
     , CurrentScore( 0 )
     , HighScore(0)
-    , speed( 1 )
     , inputCache( Direction::Right )
-    , grid{} // GRID INITIALIZATION
+    , grid{} // starts every occupation cell as false
 {
     randomizeApplePos();
 }
 
 Game::~Game() = default;
 
+//generates random positions until the apple lands on a cell not occupied by the snake
 void Game::randomizeApplePos(){
     Position newApplePos;
         do{
@@ -28,13 +28,14 @@ void Game::randomizeApplePos(){
         apple = Apple(newApplePos);
 }
 
+//runs one frame of the game: save valid input, check collision, move snake, then handle apple eating
 void Game::update(Direction input){
-    // Don't move if we're dead
+    //once the game is over, ignore any more movement input
     if(isGameOver) return;
     
     if (!isOppositeDirection(input, inputCache)) inputCache = input;
     
-    // Self-collision
+    //the next head cell is checked before moving so the snake cannot enter its own body
     Position newHead = snake.getNewPosition(inputCache);
     if(grid[newHead.getY()][newHead.getX()] == true && newHead != snake.getTail()){
         if(CurrentScore > HighScore) HighScore = CurrentScore; 
@@ -44,7 +45,7 @@ void Game::update(Direction input){
 
     updateOccupation();
 
-    // Increment CurrentScore & randomize new apple position 
+    //when the head reaches the apple, keep the tail so the snake grows by one segment
     if(newHead == apple.getPosition()) {
         CurrentScore += 10;
         snake.move(inputCache, true);
@@ -58,8 +59,10 @@ void Game::update(Direction input){
     
 }
 
+//updates the boolean grid by removing the old tail cell and marking the incoming head cell
 void Game::updateOccupation(){
     if(!initialized){
+        //on the first update, mark every starting snake segment before normal movement begins
         for(int i = 0; i < snake.getSize(); i++){
             grid[snake.getHead().getY()][snake.getHead().getX() - i + 1] = true;
         }
@@ -74,14 +77,14 @@ void Game::updateOccupation(){
     }
 }
 
+//returns the game to its starting state and clears every occupied cell from the collision grid
 void Game::resetGame(){
     snake = Snake( Position{ 5, 5 }, 3 );
     apple = Apple( Position{0,0} );
     randomizeApplePos();
     isGameOver = false;
-    gridSize = totalSize; // HARD CODED FOR NOW, CAUSES A RUNTIME ERROR WHEN totalSize IS USED
+    gridSize = totalSize; // restores the instance grid size to the default value
     CurrentScore = 0;
-    speed = 1;
     inputCache = Direction::Right;
     bool temp[20][20]{};
     for(int i =0;i<20;i++){
@@ -91,6 +94,7 @@ void Game::resetGame(){
     }
 }
 
+//provides the shared grid size to Position so coordinates can wrap around the board
 int Game::getGridSize() {
     return totalSize;
 }

@@ -1,5 +1,6 @@
 #include "snake.h"
 
+//places the first segment at the given position, then appends the rest to the left of it
 Snake::Snake(Position position, int snakeSize){
     this->body.push_front(position);
     this->size = snakeSize;
@@ -10,10 +11,12 @@ Snake::Snake(Position position, int snakeSize){
     }
 }
 
+//removes all stored body positions from the deque
 Snake::~Snake(){
     this->body.clear();
 };
 
+//uses the current direction to calculate the next head position while leaving the body unchanged
 Position Snake::getNewPosition(Direction direction){
     Position newPosition = this->getHead();
     switch (direction){
@@ -33,16 +36,22 @@ Position Snake::getNewPosition(Direction direction){
     return newPosition;
 }
 
+//the head is always stored at the front of the deque
 Position Snake::getHead(){
     return this->body.front();
 };
+
+//the tail is always stored at the back of the deque
 Position Snake::getTail(){
     return this->body.back();
 };
+
+//size is updated separately when the snake grows
 int Snake::getSize(){
     return this->size;
 }
 
+//moves by pushing a new head; normal movement pops the tail, while growth keeps it
 Position Snake::move(Direction direction, bool grow){
     
     Position newPosition = this->getNewPosition(direction);
@@ -62,6 +71,7 @@ Position Snake::move(Direction direction, bool grow){
     return newPosition;
 };
 
+//returns a copy of the deque so the GUI can draw every segment
 deque<Position> Snake::getBody() {
     return this->body;
 }
