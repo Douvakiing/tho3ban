@@ -15,8 +15,10 @@
 Tho3ban++ is a Qt/C++ implementation of the classic Snake game. The player controls a snake on a 20x20 board, collects apples to increase the score, and loses when the snake collides with its own body. The project includes a main menu, a game window, score tracking, high score tracking, a timer, keyboard controls, a reset button, and a countdown before each round starts.
 
 ## Game GUI overview
+**Main Menu**
 ![Main Menu](image_main_menu.png)
 
+**Game**
 ![Game window](image_game.png)
 
 ## Selected Data Structures
