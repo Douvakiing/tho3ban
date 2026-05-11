@@ -10,6 +10,7 @@
 #include <QTimer>
 #include <QTime>
 #include <QGraphicsDropShadowEffect>
+#include <QImage>
 
 #include "src/game.h"
 #include "src/types.h"
@@ -26,7 +27,7 @@ game_window::game_window(QWidget *parent)
     ui->graphicsView->setRenderHint(QPainter::Antialiasing, false);
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->graphicsView->setBackgroundBrush(QBrush(QColor(204, 102, 0)));
+
 
     ui->graphicsView->setFocusPolicy(Qt::StrongFocus);
     ui->graphicsView->installEventFilter(this);
@@ -43,6 +44,10 @@ game_window::game_window(QWidget *parent)
 
     // Apply it to the title
     ui->label->setGraphicsEffect(jojoShadow);
+    // ✅ ADD THESE TWO LINES INSTEAD:
+    // This sets the scene size and calls our optimized grid function ONCE.
+    scene->setSceneRect(0, 0, boardCols, boardRows);
+    drawGrid(orangeLight, orangeDark);
 
     drawGameBoard();
 
@@ -134,7 +139,7 @@ void game_window::drawGameBoard()
     scene->setSceneRect(0, 0, boardCols, boardRows);
     scene->clear();
 
-    drawGrid(orangeLight, orangeDark);
+
     drawSnake();
     drawApple();
 
@@ -176,13 +181,33 @@ void game_window::drawApple()
 
 void game_window::drawGrid(QColor lightColor, QColor darkColor)
 {
+    // 1. Create a high-resolution image so Qt doesn't blur it
+    // 30 pixels per cell * 20 cells = 600x600 pixels
+    int cellSize = 30;
+    QImage bgImage(boardCols * cellSize, boardRows * cellSize, QImage::Format_RGB32);
+
+    // 2. Use QPainter to explicitly draw the crisp squares onto the image
+    QPainter painter(&bgImage);
+    painter.setPen(Qt::NoPen);
+
     for (int y = 0; y < boardRows; ++y) {
         for (int x = 0; x < boardCols; ++x) {
             const bool light = ((x + y) % 2) == 0;
-            scene->addRect(QRectF(x, y, 1, 1), QPen(Qt::NoPen),
-                           QBrush(light ? lightColor : darkColor));
+            painter.setBrush(light ? lightColor : darkColor);
+            painter.drawRect(x * cellSize, y * cellSize, cellSize, cellSize);
         }
     }
+
+    // 3. Create the Brush from our high-res image
+    QBrush bgBrush(QPixmap::fromImage(bgImage));
+
+    // 4. Shrink the brush's coordinate mapping to match your 20x20 scene!
+    QTransform transform;
+    transform.scale(1.0 / cellSize, 1.0 / cellSize);
+    bgBrush.setTransform(transform);
+
+    // 5. Apply it permanently to the scene
+    scene->setBackgroundBrush(bgBrush);
 }
 
 void game_window::fitBoardToView()
