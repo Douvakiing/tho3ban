@@ -298,7 +298,7 @@ void game_window::handleCountdownTick()
 }
 void game_window::gameWin()
 {
-    if(game.getCurrentScore() == game.getGridSize()*10*game.getGridSize()-3*10)
+    if(game.getCurrentScore() == game.getGridSize()*10*game.getGridSize())
     {
         gameTimer->stop();
         // 1. Set the Victory Text
