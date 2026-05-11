@@ -70,6 +70,7 @@ void game_window::onGameTick()
     }
     if (game.getGameState()) {
         gameTimer->stop();
+        ui->gameOverabel->show();
         ui->gameOverabel->raise();
     } else {
         drawGameBoard();
