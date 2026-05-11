@@ -33,7 +33,7 @@ game_window::game_window(QWidget *parent)
     ui->scoreLabel->setStyleSheet(ui->scorelcdNumber->styleSheet());
     this->setWindowIcon(QIcon(":/resources/photo.png"));
     this->setWindowTitle("Tho3ban++");
-    this->setFixedSize(1080,720);
+     this->setFixedSize(1080,720);
     this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
     QGraphicsDropShadowEffect *jojoShadow = new QGraphicsDropShadowEffect();
     jojoShadow->setBlurRadius(0); // Set to 0 for a hard, manga-style outline instead of a soft blur
@@ -42,7 +42,6 @@ game_window::game_window(QWidget *parent)
 
     // Apply it to the title
     ui->label->setGraphicsEffect(jojoShadow);
-    ui->timelcdNumber->display("0:00:00");
 
     drawGameBoard();
 
@@ -58,36 +57,22 @@ game_window::~game_window()
 
 void game_window::onGameTick()
 {
-    // 1. Increment ticks (each tick is 100ms)
-    tickCounter++;
-
-    // 2. Only update seconds and UI every 10 ticks (1 second)
-    if (tickCounter >= 10) {
-        secondsElapsed++;
-        tickCounter = 0; // Reset for the next second
-
-        // Update the display only when the second actually changes
-        QTime displayTime(0, 0);
-        displayTime = displayTime.addSecs(secondsElapsed);
-        ui->timelcdNumber->display(displayTime.toString("h:mm:ss"));
-    }
-
-    // 3. Move the snake and check game state every tick (keeps movement smooth)
+    secondsElapsed++;
     game.update(pendingDirection);
     ui->scorelcdNumber->display(game.getCurrentScore());
     ui->highScorelcdNumber->display(game.getHighScore());
+    QTime displayTime(0, 0);
+    displayTime = displayTime.addSecs(secondsElapsed);
 
-    if (secondsElapsed >= 356400) { // Limit to 99:00:00 (approx 99 hours)
-        ui->timelcdNumber->display("99:59:59");
+    ui->timelcdNumber->display(displayTime.toString("h:mm:ss"));
+    if (secondsElapsed >= 360000) { // Up to 99 hours
+        ui->timelcdNumber->display("99:59:59"); // freeze clock
     }
-
     if (game.getGameState()) {
         gameTimer->stop();
-        ui->gameOverabel->show(); // Ensure it shows
         ui->gameOverabel->raise();
     } else {
         drawGameBoard();
-        gameWin();
     }
 }
 
@@ -212,12 +197,10 @@ void game_window::on_resetBtn_clicked()
 {
     game.resetGame();
     ui->gameOverabel->hide();
-    ui->gameWinLabel->hide();
     ui->graphicsView->setFocus();
     this->secondsElapsed = 0;
-    this->tickCounter = 0;
     ui->scorelcdNumber->display(0);
-    ui->timelcdNumber->display("0:00:00"); // Standard format
+    ui->timelcdNumber->display("0000:00");
     roundStartAnimation();
 }
 void game_window::updateTimerDisplay() {
@@ -295,36 +278,4 @@ void game_window::handleCountdownTick()
         countdownTimer->deleteLater();
         countdownTimer = nullptr;
     }
-}
-void game_window::gameWin()
-{
-    if(game.getCurrentScore() == game.getGridSize()*10*game.getGridSize())
-    {
-        gameTimer->stop();
-        // 1. Set the Victory Text
-        ui->gameWinLabel->setText("🏆 VICTORY! 🏆");
-
-        // 2. Apply a Golden "Winner" Styling
-        ui->gameWinLabel->setStyleSheet(
-            "color: #FFD700; "               // Gold Color
-            "font-size: 10px; "               // Large Font
-            "font-weight: bold; "
-            "background-color: rgba(0, 0, 0, 180); " // Darkened background for contrast
-            "border: 5px solid #FFD700; "
-            "border-radius: 10px; "
-            "padding: 10px;"
-            );
-
-        // 3. Add a Golden Glow Effect (Graphics Effect)
-        QGraphicsDropShadowEffect *winGlow = new QGraphicsDropShadowEffect();
-        winGlow->setBlurRadius(30);
-        winGlow->setOffset(0, 0);
-        winGlow->setColor(QColor(255, 215, 0)); // Pure Gold Glow
-        ui->gameWinLabel->setGraphicsEffect(winGlow);
-
-        // 4. Show the label
-        ui->gameWinLabel->show();
-        ui->gameWinLabel->raise();
-    }
-
 }

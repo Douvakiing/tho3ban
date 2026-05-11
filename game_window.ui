@@ -360,28 +360,14 @@ QPushButton:pressed {
      </property>
     </widget>
    </widget>
-   <widget class="QLabel" name="gameWinLabel">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>290</y>
-      <width>211</width>
-      <height>121</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>win</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignmentFlag::AlignCenter</set>
-    </property>
-   </widget>
-   <zorder>gameWinLabel</zorder>
-   <zorder>splitter</zorder>
    <zorder>gameOverabel</zorder>
    <zorder>graphicsView</zorder>
    <zorder>scorelcdNumber</zorder>
    <zorder>scoreLabel</zorder>
+   <zorder>scorelcdNumber</zorder>
+   <zorder>scoreLabel</zorder>
+   <zorder>resetBtn</zorder>
+   <zorder>backBtn</zorder>
    <zorder>timelcdNumber</zorder>
    <zorder>timeLabel</zorder>
    <zorder>countdownTimeLabel</zorder>

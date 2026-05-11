@@ -48,7 +48,6 @@ private:
     int boardRows = 20;
     int secondsElapsed = 0;
     int countdownValue = 3;
-    int tickCounter = 0;
     QTimer *countdownTimer = nullptr;
     void handleCountdownTick();
 
@@ -61,7 +60,6 @@ private:
     void fitBoardToView();
     void updateTimerDisplay();
     void roundStartAnimation();
-    void gameWin();
 
     void resizeEvent(QResizeEvent *event) override;
     void showEvent(QShowEvent *event) override;
