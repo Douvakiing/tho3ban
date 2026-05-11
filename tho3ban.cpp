@@ -7,6 +7,7 @@ tho3ban::tho3ban(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::tho3ban)
 {
+    //loads widgets from the .ui file and applies the shared window branding
     ui->setupUi(this);
     this->setWindowIcon(QIcon(":/resources/photo.png"));
     this->setWindowTitle("Tho3ban++");
@@ -16,29 +17,28 @@ tho3ban::tho3ban(QWidget *parent)
 
 tho3ban::~tho3ban()
 {
+    //deletes the generated UI object and all child widgets owned by it
     delete ui;
 }
 
 void tho3ban::on_pushButton_clicked()
 {
-    // 1. Create a new instance of your game window using 'new'
-    // (Note: Check your game_window.h file. Qt usually capitalizes the
-    // first letter of the class, so it might be Game_window or game_window)
+    //create the game screen separately so the menu can stay hidden in the background
     game_window *myGame = new game_window();
 
-    // 2. Tell Qt to clean up the memory when this new window is eventually closed
+    //Qt will delete the game window automatically when it closes
     myGame->setAttribute(Qt::WA_DeleteOnClose);
 
-    // 3. Show the new window
+    //show gameplay and hide the menu until the player returns or quits
     myGame->show();
 
-    // 4. Hide the main menu
     this->hide();
 }
 
 
 void tho3ban::on_pushButton_2_clicked()
 {
+    //quit the Qt application from the main menu
     QApplication::quit();
 }
 
