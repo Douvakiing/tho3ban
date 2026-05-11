@@ -5,7 +5,7 @@
 
 Game::Game()
     : snake( Position{ 5, 5 }, 3 )
-    , apple( Position{std::rand() % Game::getGridSize() , std::rand() % Game::getGridSize()} )
+    , apple( Position{0,0} )
     , isGameOver( false )
     , gridSize( totalSize ) // HARD CODED FOR NOW, CAUSES A RUNTIME ERROR WHEN totalSize IS USED
     , CurrentScore( 0 )
@@ -14,10 +14,19 @@ Game::Game()
     , inputCache( Direction::Right )
     , grid{} // GRID INITIALIZATION
 {
+    randomizeApplePos();
 }
 
 Game::~Game() = default;
-void Game::draw() {}
+
+void Game::randomizeApplePos(){
+    Position newApplePos;
+        do{
+            newApplePos.randomizePosition();
+        }
+        while( grid[newApplePos.getY()][newApplePos.getX()] );
+        apple = Apple(newApplePos);
+}
 
 void Game::update(Direction input){
     // Don't move if we're dead
@@ -40,12 +49,7 @@ void Game::update(Direction input){
         CurrentScore += 10;
         snake.move(inputCache, true);
         
-        Position newApplePos;
-        do{
-            newApplePos.randomizePosition();
-        }
-        while( grid[newApplePos.getY()][newApplePos.getX()] );
-        apple = Apple(newApplePos);
+        randomizeApplePos();
     }
     else{
 
@@ -72,7 +76,8 @@ void Game::updateOccupation(){
 
 void Game::resetGame(){
     snake = Snake( Position{ 5, 5 }, 3 );
-    apple = Apple( Position{std::rand() % Game::getGridSize() , std::rand() % Game::getGridSize()} );
+    apple = Apple( Position{0,0} );
+    randomizeApplePos();
     isGameOver = false;
     gridSize = totalSize; // HARD CODED FOR NOW, CAUSES A RUNTIME ERROR WHEN totalSize IS USED
     CurrentScore = 0;

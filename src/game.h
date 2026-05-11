@@ -27,6 +27,8 @@ class Game
         bool initialized = false; // FOR FIRST TIME INITALIZATION
         
         void updateOccupation();
+
+        void randomizeApplePos();
     public:
         Game();
         ~Game();
@@ -54,8 +56,6 @@ class Game
         };
 
         void update(Direction input);
-
-        void draw();
 
         void resetGame();
 
