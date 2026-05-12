@@ -14,25 +14,28 @@
 
 Tho3ban++ is a Qt/C++ implementation of the classic Snake game. The player controls a snake on a 20x20 board, collects apples to increase the score, and loses when the snake collides with its own body. The project includes a main menu, a game window, score tracking, high score tracking, a timer, keyboard controls, a reset button, and a countdown before each round starts.
 
-## Game GUI overview
-**Main Menu**
-![Main Menu](image_main_menu.png)
+## Game GUI Overview
 
-**Game**
-![Game window](image_game.png)
+<p align="center">
+  <b>Main Menu</b><br>
+  <img src="image_main_menu.png" width="70%" alt="Main Menu">
+  <br><br>
+  <b>In-Game Action</b><br>
+  <img src="image_game.png" width="70%" alt="Game Window">
+</p>
 
 ## Download and Play
 
 You can download the pre-compiled, ready-to-play Windows version of Tho3ban++ here:
-* [Download Tho3ban++ v1.0.0 (.rar)](https://github.com/Douvakiing/tho3ban/releases/download/v1.0.0/Tho3ban_Deploy.rar)
+* [**Download Tho3ban++ v1.0.0 (.rar)**](https://github.com/Douvakiing/tho3ban/releases/download/v1.0.0/Tho3ban_Deploy.rar)
 
 *Note: Extract the `.rar` file and run the executable inside to play.*
 
 ## Selected Data Structures
 
 * `deque<Position>` is used to store the snake body. The head is kept at the front and the tail at the back, which makes movement efficient because the game can push a new head and remove the tail each tick.
-* `bool grid[20][20]` is used as an occupation grid for collision detection. Each cell records whether part of the snake currently occupies that position, allowing fast self-collision checks.
-* `Position` class is used to store x and y coordinates. It also wraps coordinates around the board limits, so moving past an edge continues from the opposite side.
+* `bool grid[20][20]` is used as an occupation grid for collision detection. Each cell records whether part of the snake currently occupies that position, allowing fast $O(1)$ self-collision checks.
+* `Position` class is used to store x and y coordinates. It also wraps coordinates around the board limits.
 * `enum class Direction` is used to represent snake movement directions clearly and safely.
 * `QGraphicsScene` is used to draw the board, snake, and apple in the Qt game window.
 * `QTimer` is used for the game loop and countdown timer.
@@ -40,95 +43,63 @@ You can download the pre-compiled, ready-to-play Windows version of Tho3ban++ he
 ## Implemented Features
 
 * Main menu window with play and quit buttons.
-* 20x20 snake game board.
+* 20x20 snake game board with checkerboard background.
 * Snake movement using arrow keys and WASD.
 * Apple spawning in empty cells.
-* Score increases when the snake eats an apple.
-* High score display.
+* Score and high score tracking.
 * Self-collision game over detection.
-* Reset button to restart the round.
-* Back button to return to the main menu.
-* Game timer display.
 * Countdown animation before movement starts.
-* Checkerboard board background.
 * Custom snake and apple drawing using Qt graphics.
 
 ## How to Compile and Run
 
 ### Requirements
-
 * C++ compiler with C++17 support.
 * CMake 3.19 or newer.
 * Qt 6.5 or newer with the `Core` and `Widgets` modules.
-* Qt Creator is recommended for easiest setup.
 
-### Run Using Qt Creator
+### Setup Instructions
+1. Open **Qt Creator**.
+2. Select **Open Project** and choose the `CMakeLists.txt` file.
+3. Configure the project with a **Qt 6 kit**.
+4. Click **Build** and then **Run**.
 
-1. Open Qt Creator.
-2. Choose **Open Project**.
-3. Select the `CMakeLists.txt` file from this project folder.
-4. Configure the project with a Qt 6 kit.
-5. Click **Build**.
-6. Click **Run**.
-
-### Compile and Run From Command Line
-
-From the project root folder:
-
-```bash
-cmake -S . -B build
-cmake --build build
-```
-
-After building, run the generated executable from the build folder. On Windows, the executable is usually located in a configuration subfolder such as:
-
-```bash
-build/Debug/tho3ban.exe
-```
-
-or:
-
-```bash
-build/Release/tho3ban.exe
-```
-
-If CMake cannot find Qt, make sure the Qt `bin` directory is added to your `PATH`, or configure the project through Qt Creator.
+---
 
 ## AI Usage Declaration
 
 * **AI Tools Used:** Cursor AI Assistant (Codex model) and ChatGPT/Gemini for debugging and logic optimization.
 * **Purpose:** We utilized AI primarily for code documentation, formatting cleanup, debugging assistance, and algorithm optimization. 
 * **Modifications and Rejections:** We actively reviewed and rejected the AI's first pass at commenting because it only provided superficial titles rather than explaining implementation details. We also rejected its initial diagnostic suggestions for a build error, which led us to find the root cause manually.
-* **What We Understood and Implemented Ourselves:** Our group fully designed, wrote, and debugged the core game logic, the Qt UI, and the integration of our chosen data structures. Through debugging, we learned not to rely blindly on AI for build-system configurations and to manually verify our CMake pipelines.
 
 ### Successful AI Usage: Performance Optimization
-During development, we wanted to find a more efficient way to detect collisions without looping through the entire snake body on every frame. We prompted the AI for a solution, and it recommended using a **Grid Occupancy Map**. We understood that this would reduce our collision detection time complexity from `O(N)` (searching the body vector) to `O(1)` (checking a 2D array index). We then successfully implemented this 2D grid structure in our final design.
+During development, we wanted to find a more efficient way to detect collisions without looping through the entire snake body on every frame. We prompted the AI for a solution, and it recommended using a **Grid Occupancy Map**. We understood that this would reduce our collision detection time complexity from $O(N)$ to $O(1)$.
 
 ### Unsuitable Output Example: Case Study in AI Diagnostic Failure
 
 **The Problem:**
-During development, our Qt6 C++ application compiled successfully but threw a runtime error: `"could not load pixmap"`. 
+Our application compiled successfully but threw a runtime error: `"could not load pixmap"`. 
 
 **The AI's Initial (Flawed) Diagnosis:**
-When asked to debug, the AI hypothesized that the issue was either:
-1. A missing runtime image plugin (specifically `qjpeg.dll` for JPEG decoding).
-2. A stale CMake cache requiring a manual deletion of the `/build` folder.
+The AI hypothesized that the issue was either a missing runtime image plugin (`qjpeg.dll`) or a stale CMake cache.
 
 **The Actual Solution:**
-The true fix was a missing directive in the build configuration. Adding `set(CMAKE_AUTORCC ON)` to the `CMakeLists.txt` forced the compiler to process the `resources.qrc` file and embed the image into the executable. 
+The true fix was adding `set(CMAKE_AUTORCC ON)` to the `CMakeLists.txt`. The AI failed because it had "Blind Trust" in the `qt_standard_project_setup()` command, which was supposed to handle this automatically but failed in our specific environment.
 
-**Why the AI Failed (Lessons Learned):**
-* **Blind Trust in "Magic" Commands:** In our `CMakeLists.txt`, we used the command `qt_standard_project_setup()`. According to official Qt6 documentation, this command is *supposed* to automatically enable `AUTORCC` globally. The AI read that command and incorrectly assumed the build system was already handling resources perfectly, failing to account for real-world edge cases where `AUTORCC` silently fails to trigger without an explicit override.
-* **Treating Symptoms instead of Root Causes:** Because the AI assumed the CMake file was correct, it prioritized a statistically common runtime error (missing external JPEG plugins) over verifying the compilation pipeline itself.
-* **Lack of Environmental Awareness:** The AI cannot "run" the code to see if the compiled `qrc_resources.cpp` file actually generated inside the build directory. While a human developer can check the build folder and immediately see the missing resource, the AI had to guess at the cache instead. 
+---
 
 ### AI Usage Evidence
 
-**Using AI to optimize collision detection complexity to O(1):**
-![Grid Optimization](image_grid.png)
+**1. Using AI to optimize collision detection complexity:**
+<br>
+<img src="image_grid.png" width="80%" alt="Grid Optimization">
 
-**Prompting AI to standardize comment styling across files:**
-![Standardizing Comments](image_first_prompt.png) 
+**2. Prompting AI to standardize and fix implementation comments:**
+<br>
+<img src="image_first_prompt.png" width="80%" alt="Initial Prompt">
+<br>
+<img src="image_correct.png" width="80%" alt="Corrected Comments">
 
-**Correcting AI's unsuitable output to focus on implementation details:**
-![Refining Comments](image_correct.png)
+**3. AI failing to diagnose the CMake/Resource error:**
+<br>
+<img src="image_cmake_error.png" width="80%" alt="CMake Diagnostic Error">
