@@ -18,10 +18,10 @@ Tho3ban++ is a Qt/C++ implementation of the classic Snake game. The player contr
 
 <p align="center">
   <b>Main Menu</b><br>
-  <img src="image_main_menu.png" width="70%" alt="Main Menu">
+  <img src="image_main_menu.png" width="75%" alt="Main Menu">
   <br><br>
-  <b>In-Game Action</b><br>
-  <img src="image_game.png" width="70%" alt="Game Window">
+  <b>In-Game</b><br>
+  <img src="image_game.png" width="75%" alt="Game Window">
 </p>
 
 ## Download and Play
@@ -91,21 +91,25 @@ The true fix was adding `set(CMAKE_AUTORCC ON)` to the `CMakeLists.txt`. The AI 
 ### AI Usage Evidence
 
 **1. Using AI to optimize collision detection complexity:**
-<br>
-<img src="image_grid.png" width="60%" alt="Grid Optimization">
+<p align="center">
+  <img src="image_grid.png" width="60%" alt="Grid Optimization">
+</p>
 
 **2. Prompting AI to standardize and fix implementation comments:**
-<br>
-<table border="0">
-  <tr>
-    <td><b>Initial Prompt</b></td>
-    <td><b>Refining Comments</b></td>
-  </tr>
-  <tr>
-    <td><img src="image_first_prompt.png" width="60%" alt="Initial Prompt"></td>
-    <td><img src="image_correct.png" width="60%" alt="Corrected Comments"></td>
-  </tr>
-</table>
+<div align="center">
+  <table border="0">
+    <tr>
+      <td align="center"><b>Initial Prompt</b></td>
+      <td align="center"><b>Refining Comments</b></td>
+    </tr>
+    <tr>
+      <td><img src="image_first_prompt.png" width="80%" alt="Initial Prompt"></td>
+      <td><img src="image_correct.png" width="80%" alt="Corrected Comments"></td>
+    </tr>
+  </table>
+</div>
+
 **3. AI failing to diagnose the CMake/Resource error:**
-<br>
-<img src="image_cmake_error.png" width="60%" alt="CMake Diagnostic Error">
+<p align="center">
+  <img src="image_cmake_error.png" width="60%" alt="CMake Diagnostic Error">
+</p>
