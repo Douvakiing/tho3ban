@@ -21,6 +21,13 @@ Tho3ban++ is a Qt/C++ implementation of the classic Snake game. The player contr
 **Game**
 ![Game window](image_game.png)
 
+## Download and Play
+
+You can download the pre-compiled, ready-to-play Windows version of Tho3ban++ here:
+* [Download Tho3ban++ v1.0.0 (.rar)](https://github.com/Douvakiing/tho3ban/releases/download/v1.0.0/Tho3ban_Deploy.rar)
+
+*Note: Extract the `.rar` file and run the executable inside to play.*
+
 ## Selected Data Structures
 
 * `deque<Position>` is used to store the snake body. The head is kept at the front and the tail at the back, which makes movement efficient because the game can push a new head and remove the tail each tick.
@@ -89,10 +96,13 @@ If CMake cannot find Qt, make sure the Qt `bin` directory is added to your `PATH
 
 ## AI Usage Declaration
 
-* **AI Tools Used:** Cursor AI Assistant (Codex model) and ChatGPT/Gemini for debugging.
-* **Purpose:** We utilized AI primarily for code documentation, formatting cleanup, and debugging assistance. 
+* **AI Tools Used:** Cursor AI Assistant (Codex model) and ChatGPT/Gemini for debugging and logic optimization.
+* **Purpose:** We utilized AI primarily for code documentation, formatting cleanup, debugging assistance, and algorithm optimization. 
 * **Modifications and Rejections:** We actively reviewed and rejected the AI's first pass at commenting because it only provided superficial titles rather than explaining implementation details. We also rejected its initial diagnostic suggestions for a build error, which led us to find the root cause manually.
-* **What We Understood and Implemented Ourselves:** Our group fully designed, wrote, and debugged the core game logic, the Qt UI, and the integration of our chosen data structures (the `deque` for snake movement and the 2D boolean grid for collisions). Through debugging, we also learned not to rely blindly on AI for build-system configurations and to manually verify our CMake pipelines.
+* **What We Understood and Implemented Ourselves:** Our group fully designed, wrote, and debugged the core game logic, the Qt UI, and the integration of our chosen data structures. Through debugging, we learned not to rely blindly on AI for build-system configurations and to manually verify our CMake pipelines.
+
+### Successful AI Usage: Performance Optimization
+During development, we wanted to find a more efficient way to detect collisions without looping through the entire snake body on every frame. We prompted the AI for a solution, and it recommended using a **Grid Occupancy Map**. We understood that this would reduce our collision detection time complexity from `O(N)` (searching the body vector) to `O(1)` (checking a 2D array index). We then successfully implemented this 2D grid structure in our final design.
 
 ### Unsuitable Output Example: Case Study in AI Diagnostic Failure
 
@@ -113,6 +123,9 @@ The true fix was a missing directive in the build configuration. Adding `set(CMA
 * **Lack of Environmental Awareness:** The AI cannot "run" the code to see if the compiled `qrc_resources.cpp` file actually generated inside the build directory. While a human developer can check the build folder and immediately see the missing resource, the AI had to guess at the cache instead. 
 
 ### AI Usage Evidence
+
+**Using AI to optimize collision detection complexity to O(1):**
+![Grid Optimization](image_grid.png)
 
 **Prompting AI to standardize comment styling across files:**
 ![Standardizing Comments](image_first_prompt.png) 
