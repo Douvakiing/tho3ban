@@ -92,14 +92,20 @@ The true fix was adding `set(CMAKE_AUTORCC ON)` to the `CMakeLists.txt`. The AI 
 
 **1. Using AI to optimize collision detection complexity:**
 <br>
-<img src="image_grid.png" width="80%" alt="Grid Optimization">
+<img src="image_grid.png" width="60%" alt="Grid Optimization">
 
 **2. Prompting AI to standardize and fix implementation comments:**
 <br>
-<img src="image_first_prompt.png" width="80%" alt="Initial Prompt">
-<br>
-<img src="image_correct.png" width="80%" alt="Corrected Comments">
-
+<table border="0">
+  <tr>
+    <td><b>Initial Prompt</b></td>
+    <td><b>Refining Comments</b></td>
+  </tr>
+  <tr>
+    <td><img src="image_first_prompt.png" width="60%" alt="Initial Prompt"></td>
+    <td><img src="image_correct.png" width="60%" alt="Corrected Comments"></td>
+  </tr>
+</table>
 **3. AI failing to diagnose the CMake/Resource error:**
 <br>
-<img src="image_cmake_error.png" width="80%" alt="CMake Diagnostic Error">
+<img src="image_cmake_error.png" width="60%" alt="CMake Diagnostic Error">
